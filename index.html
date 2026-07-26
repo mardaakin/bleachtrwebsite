@@ -50,15 +50,15 @@
             font-weight: 900;
             letter-spacing: 2px;
             background: linear-gradient(45deg, #00e5ff, #ffffff);
-           -webkit-background-clip: text;
-background-clip: text;
--webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 35px;
+            gap: 25px;
         }
 
         .nav-links a {
@@ -92,7 +92,7 @@ background-clip: text;
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 100vh;
+            min-height: 90vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -117,7 +117,7 @@ background-clip: text;
 
         .hero h1 {
             font-family: 'Cinzel', serif;
-            font-size: 4.2rem;
+            font-size: 4rem;
             line-height: 1.1;
             margin-bottom: 20px;
         }
@@ -128,18 +128,19 @@ background-clip: text;
         }
 
         .hero p {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: #9097a6;
             max-width: 650px;
             margin-bottom: 35px;
             line-height: 1.6;
         }
 
+        /* C: CANLI SUNUCU İSTATİSTİKLERİ */
         .stats-bar {
             display: flex;
             gap: 40px;
-            margin-top: 40px;
-            padding: 20px 40px;
+            margin-top: 20px;
+            padding: 20px 50px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -148,24 +149,22 @@ background-clip: text;
 
         .stat-item h3 {
             font-size: 1.8rem;
-            color: #fff;
+            color: #00e5ff;
         }
 
         .stat-item p {
             font-size: 0.85rem;
             color: #707788;
-            margin-bottom: 0;
         }
 
-        /* --- CARDS SECTION --- */
         .section-title {
             text-align: center;
-            padding: 80px 20px 40px;
+            padding: 80px 20px 30px;
         }
 
         .section-title h2 {
             font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 10px;
         }
 
@@ -173,93 +172,137 @@ background-clip: text;
             color: #707788;
         }
 
-        .card-container {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            padding: 0 40px 80px;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 35px 25px;
-            border-radius: 16px;
-            width: 350px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .card.shinigami:hover { box-shadow: 0 10px 30px rgba(243, 156, 18, 0.15); }
-        .card.hollow:hover { box-shadow: 0 10px 30px rgba(231, 76, 60, 0.15); }
-        .card.quincy:hover { box-shadow: 0 10px 30px rgba(0, 229, 255, 0.15); }
-
-        .card-icon {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-        }
-
-        .card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 12px;
-        }
-
-        .card p {
-            color: #808797;
-            font-size: 0.92rem;
-            line-height: 1.6;
-        }
-
-        /* --- FAQ SECTION --- */
-        .faq-container {
-            max-width: 800px;
-            margin: 0 auto 100px;
+        /* A: LİDERLİK TABLOSU (LEADERBOARD) */
+        .leaderboard-container {
+            max-width: 900px;
+            margin: 0 auto 50px;
             padding: 0 20px;
         }
 
-        .faq-item {
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .leaderboard-table th, .leaderboard-table td {
+            padding: 15px 20px;
+            text-align: left;
+        }
+
+        .leaderboard-table th {
+            background: rgba(0, 0, 0, 0.4);
+            color: #00e5ff;
+            font-weight: 600;
+        }
+
+        .leaderboard-table tr {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .leaderboard-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .rank {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .rank-1 { color: #f1c40f; }
+        .rank-2 { color: #bdc3c7; }
+        .rank-3 { color: #e67e22; }
+
+        /* B: İNTERAKTİF WIKI & KOMUT REHBERİ */
+        .wiki-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .wiki-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            margin-bottom: 15px;
-            overflow: hidden;
+            padding: 25px;
+            width: 320px;
         }
 
-        .faq-question {
-            padding: 20px;
-            font-weight: 600;
-            cursor: pointer;
+        .wiki-card h3 {
+            color: #00e5ff;
+            margin-bottom: 10px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 10px;
         }
 
-        .faq-answer {
-            padding: 0 20px 20px;
-            color: #808797;
-            font-size: 0.95rem;
-            display: none;
-            line-height: 1.6;
+        .wiki-card code {
+            background: rgba(0, 0, 0, 0.5);
+            color: #e74c3c;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .wiki-card ul {
+            list-style: none;
+            color: #a0a5b5;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        /* E: GÜNCELLEME NOTLARI (PATCH NOTES) */
+        .patch-container {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .patch-box {
+            background: var(--card-bg);
+            border-left: 4px solid #00e5ff;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 15px;
+        }
+
+        .patch-date {
+            font-size: 0.8rem;
+            color: #707788;
+            margin-bottom: 5px;
+        }
+
+        .patch-title {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .patch-list {
+            color: #a0a5b5;
+            font-size: 0.9rem;
+            padding-left: 20px;
         }
 
         /* --- FOOTER --- */
         footer {
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             background: #050608;
             color: #505565;
             border-top: 1px solid var(--border-color);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
     </style>
 </head>
@@ -268,107 +311,146 @@ background-clip: text;
     <nav>
         <div class="logo">BLEACH:TR</div>
         <ul class="nav-links">
-            <li><a href="#hero">Ana Sayfa</a></li>
-            <li><a href="#irklar">Irklar</a></li>
-            <li><a href="#faq">S.S.S.</a></li>
+            <li><a href="#liderlik">Sıralama</a></li>
+            <li><a href="#rehber">Rehber & Komutlar</a></li>
+            <li><a href="#yamalar">Güncellemeler</a></li>
         </ul>
-        <a href="DISCORD_DAVET_LINKIN" target="_blank" class="btn-discord">Discord'a Katıl</a>
+        <a href="https://discord.gg/SENIN_LINKIN" target="_blank" class="btn-discord">Discord'a Katıl</a>
     </nav>
 
-    <section class="hero" id="hero">
-        <div class="badge">⚔️ DİSCORD MMORPG DENEYİMİ</div>
+    <section class="hero">
+        <div class="badge">⚡ DİSCORD MMORPG DENEYİMİ</div>
         <h1>Ruh Enerjini <span>Serbest Bırak.</span></h1>
-        <p>Gotei 13 bölüklerine katıl, Hueco Mundo'da sınırları zorla ya da Quincy ordusuyla gölgeleri yönet. Zanpakutō'nun gerçek adını öğrenme vakti geldi.</p>
+        <p>Gotei 13 bölüklerine katıl, Hueco Mundo'da sınırları zorla ya da Quincy ordusuyla gölgeleri yönet.</p>
         
         <div class="stats-bar">
             <div class="stat-item">
-                <h3>3</h3>
-                <p>Oynanabilir Irk</p>
+                <h3>🟢 120+</h3>
+                <p>Aktif Oyuncu</p>
             </div>
             <div class="stat-item">
-                <h3>100+</h3>
-                <p>Zindan Katı</p>
+                <h3>🏰 100</h3>
+                <p>Muken Zindan Katı</p>
             </div>
             <div class="stat-item">
-                <h3>%100</h3>
-                <p>Özel Bot Sistemi</p>
+                <h3>⚔️ 1.5K+</h3>
+                <p>Tamamlanan Savaş</p>
             </div>
         </div>
     </section>
 
-    <section id="irklar">
+    <section id="liderlik">
         <div class="section-title">
-            <h2>Efsanevi Sınıflar</h2>
-            <p>Hangi tarafta yer alacaksın?</p>
+            <h2>🏆 En Güçlü Savaşçılar</h2>
+            <p>Muken Zindanı ve Arenanın En İyileri</p>
         </div>
 
-        <div class="card-container">
-            <div class="card shinigami">
-                <div class="card-icon">⚔️</div>
-                <h3 style="color: var(--shinigami-color);">Shinigami</h3>
-                <p>Shikai ve Bankai formlarını uyandır. Hadou büyüleri ve Kendo teknikleriyle Ruh Cemiyeti'nin dengesini koru.</p>
+        <div class="leaderboard-container">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Oyuncu</th>
+                        <th>Irk</th>
+                        <th>Seviye</th>
+                        <th>Kat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="rank rank-1">🥇 1</td>
+                        <td><strong>Odekai</strong></td>
+                        <td>Shinigami</td>
+                        <td>Lv. 45</td>
+                        <td>Kat 32</td>
+                    </tr>
+                    <tr>
+                        <td class="rank rank-2">🥈 2</td>
+                        <td><strong>Arda</strong></td>
+                        <td>Hollow</td>
+                        <td>Lv. 41</td>
+                        <td>Kat 28</td>
+                    </tr>
+                    <tr>
+                        <td class="rank rank-3">🥉 3</td>
+                        <td><strong>Keishu</strong></td>
+                        <td>Quincy</td>
+                        <td>Lv. 38</td>
+                        <td>Kat 25</td>
+                    </tr>
+                    <tr>
+                        <td class="rank">4</td>
+                        <td>Renji_Fan</td>
+                        <td>Shinigami</td>
+                        <td>Lv. 30</td>
+                        <td>Kat 20</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="rehber">
+        <div class="section-title">
+            <h2>📚 Oyun Rehberi & Komutlar</h2>
+            <p>Sistemlerin kullanımı ve komut listesi</p>
+        </div>
+
+        <div class="wiki-container">
+            <div class="wiki-card">
+                <h3>🏰 Muken Zindanı</h3>
+                <ul>
+                    <li><code>/zindan</code> — Zindana adım atarsınız.</li>
+                    <li>Her gün 3 ücretsiz giriş hakkı.</li>
+                    <li>Yaratıkları keserek XP ve Kaisei kazanın.</li>
+                    <li>Boss katlarından özel ganimetler düşer.</li>
+                </ul>
             </div>
 
-            <div class="card hollow">
-                <div class="card-icon">👹</div>
-                <h3 style="color: var(--hollow-color);">Hollow & Arrancar</h3>
-                <p>Gillian'dan Vasto Lorde seviyesine evril. Resurrección formunu serbest bırakarak devasa Cero patlamaları yarat.</p>
+            <div class="wiki-card">
+                <h3>🎒 Envanter & Market</h3>
+                <ul>
+                    <li><code>/envanter</code> — Eşyalarınızı yönetin.</li>
+                    <li><code>/market</code> — Kaisei ile alışveriş yapın.</li>
+                    <li>Yiyecekler canınızı (HP) doldurur.</li>
+                    <li>Stat eşyaları kalıcı güç kazandırır.</li>
+                </ul>
             </div>
 
-            <div class="card quincy">
-                <div class="card-icon">🏹</div>
-                <h3 style="color: var(--quincy-color);">Quincy</h3>
-                <p>Kutsal Schrift harfini kazan. Reishi okları ve Vollständig uyanışıyla düşmanlarını gölgelerden yok et.</p>
+            <div class="wiki-card">
+                <h3>🔮 Uyanış & Formlar</h3>
+                <ul>
+                    <li><code>/shikairoll</code> — Shinigami uyanışı.</li>
+                    <li><code>/resurreccionroll</code> — Hollow formu.</li>
+                    <li><code>/schriftroll</code> — Quincy harf uyanışı.</li>
+                    <li>Parşömenler marketten alınabilir.</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <section id="faq">
+    <section id="yamalar">
         <div class="section-title">
-            <h2>Sıkça Sorulan Sorular</h2>
-            <p>Oyuna başlamadan önce bilmen gerekenler</p>
+            <h2>📜 Yama Notları</h2>
+            <p>Son yapılan güncellemeler ve geliştirmeler</p>
         </div>
 
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Nasıl kayıt olup oynamaya başlayabilirim?</span>
-                    <span>➕</span>
-                </div>
-                <div class="faq-answer">
-                    Discord sunucumuza katıldıktan sonra ilgili kayıt kanalından ırkını seçip karakterini oluşturabilir ve hemen `/zindan` veya `/savas` komutlarıyla maceraya başlayabilirsin.
-                </div>
-            </div>
-
-            <div class="faq-item">
-                <div class="faq-question" onclick="toggleFaq(this)">
-                    <span>Muken Zindanı sistemi nasıl çalışır?</span>
-                    <span>➕</span>
-                </div>
-                <div class="faq-answer">
-                    Her gün 3 ücretsiz giriş hakkın bulunur. Katları tırmandıkça seviyene uygun rakiplerle karşılaşırsın. Her 10 katta bir devasa Boss'lar çıkar ve nadir ganimetler bırakır!
-                </div>
+        <div class="patch-container">
+            <div class="patch-box">
+                <div class="patch-date">27 Temmuz 2026</div>
+                <div class="patch-title">v1.2 — Muken Zindanı & Market Güncellemesi</div>
+                <ul class="patch-list">
+                    <li>Zindan Anahtarı markete ve envanter sistemine eklendi.</li>
+                    <li>Level atlama XP hesaplamaları güncellendi.</li>
+                    <li>Sağlık ve yiyeçek eşyalarının adet gösterim hatası çözüldü.</li>
+                </ul>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Bleach: Türkiye RPG — Tüm Hakları Saklıdır.</p>
+        <p>&copy; 2026 Bleach: Türkiye RPG — KeishuLand. Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <script>
-        function toggleFaq(element) {
-            const answer = element.nextElementSibling;
-            const isVisible = answer.style.display === "block";
-            
-            document.querySelectorAll('.faq-answer').forEach(el => el.style.display = 'none');
-            document.querySelectorAll('.faq-question span:last-child').forEach(el => el.textContent = '➕');
-
-            if (!isVisible) {
-                answer.style.display = "block";
-                element.querySelector('span:last-child').textContent = '➖';
-            }
-        }
-    </script>
 </body>
 </html>
