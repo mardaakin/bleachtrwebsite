@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komutlar Rehberi | Bleach: Türkiye RPG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Cinzel:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #090a0f;
+            --card-bg: rgba(22, 26, 36, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-blue: #00e5ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVBAR */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 60px;
+            background: rgba(9, 10, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #00e5ff, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .btn-back {
+            color: #a0a5b5;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-back:hover {
+            color: var(--accent-blue);
+        }
+
+        /* LAYOUT */
+        .container {
+            display: flex;
+            flex: 1;
+            max-width: 1300px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 20px;
+            gap: 30px;
+        }
+
+        /* SIDEBAR (KATEGORİLER) */
+        .sidebar {
+            width: 280px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            height: fit-content;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar h3 {
+            font-size: 1rem;
+            color: #707788;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 18px;
+            text-align: left;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            color: #a0a5b5;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+        }
+
+        .tab-btn.active {
+            background: rgba(0, 229, 255, 0.1);
+            border-color: rgba(0, 229, 255, 0.3);
+            color: var(--accent-blue);
+        }
+
+        /* CONTENT AREA */
+        .main-content {
+            flex: 1;
+        }
+
+        .header-box {
+            margin-bottom: 30px;
+        }
+
+        .header-box h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        .header-box p {
+            color: #707788;
+        }
+
+        .search-box {
+            margin-bottom: 25px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        /* COMMAND CARDS */
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        .cmd-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .cmd-card:hover {
+            border-color: rgba(0, 229, 255, 0.3);
+            transform: translateX(5px);
+        }
+
+        .cmd-info h4 {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            margin-bottom: 6px;
+        }
+
+        .cmd-info p {
+            color: #a0a5b5;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .btn-copy {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-copy:hover {
+            background: var(--accent-blue);
+            color: #000;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #050608;
+            color: #505565;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">BLEACH:TR</a>
+        <a href="index.html" class="btn-back">⬅️ Ana Sayfaya Dön</a>
+    </nav>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>Kategoriler</h3>
+            <button class="tab-btn active" onclick="openTab('savas')">⚔️ Savaş & Zindan</button>
+            <button class="tab-btn" onclick="openTab('karakter')">👤 Karakter & Gelişim</button>
+            <button class="tab-btn" onclick="openTab('ekonomi')">💰 Ekonomi & Market</button>
+            <button class="tab-btn" onclick="openTab('roll')">🔮 Irk & Uyanış (Roll)</button>
+        </div>
+
+        <div class="main-content">
+            <div class="header-box">
+                <h1>Oyuncu Komutları</h1>
+                <p>Discord sunucumuzda kullanabileceğiniz tüm oyun komutları ve açıklamaları.</p>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Komut ara... (Örn: /zindan)" onkeyup="filterCommands()">
+            </div>
+
+            <div id="savas" class="tab-content active">
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/zindan</h4>
+                        <p>🏰 Sonsuz Muken Zindanı'na girerek katları tırmanın! (Günde 3 Hak)</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/zindan')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/savaş</h4>
+                        <p>Mevcut gücünüze uygun bir Hollow ile savaşa tutuşursunuz.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/savaş')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/duello</h4>
+                        <p>Başka bir oyuncuya düello teklif edin.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/duello')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/vur</h4>
+                        <p>Aktif olan Global Boss'a saldırırsınız.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/vur')">Kopyala</button>
+                </div>
+            </div>
+
+            <div id="karakter" class="tab-content">
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/stats</h4>
+                        <p>Karakterinizin veya başka bir oyuncunun güncel profil kartını ve istatistiklerini gösterir.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/stats')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/skilltree</h4>
+                        <p>Yetenek ağacını açarak istatistiklerinizi geliştirin veya yeni skiller satın alın.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/skilltree')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/antrenman</h4>
+                        <p>Karakterinizi eğiterek saldırı gücünüzü arttırırsınız (60 dakikada bir).</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/antrenman')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/dinlen</h4>
+                        <p>Nefeslenip yaralarınızı sarar ve canınızı tazeleyebilirsiniz.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/dinlen')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/evrim</h4>
+                        <p>Hollow ırkına özel Ultimatum evrim menüsünü açar.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/evrim')">Kopyala</button>
+                </div>
+            </div>
+
+            <div id="ekonomi" class="tab-content">
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/envanter</h4>
+                        <p>Sırt çantanızdaki eşyaları görüntüler, kullanır veya satar.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/envanter')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/market</h4>
+                        <p>KeishuLand marketinden alışveriş yapın.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/market')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/cüzdan</h4>
+                        <p>Kendi Keishi ve Kaisei bakiyelerinizi gösterir.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/cüzdan')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/günlük</h4>
+                        <p>24 saatte bir 50-200 arası rastgele ücretsiz sanal Kaisei ödülünüzü alırsınız.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/günlük')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/görev</h4>
+                        <p>Günlük görevlerinizi kontrol edin ve tamamlananların ödüllerini alın.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/görev')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/kutuaç</h4>
+                        <p>Mevcut sanal Kaisei paranızla ırkınıza ait gizemli bir Ganimet Kutusu açarsınız.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/kutuaç')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/coinflip</h4>
+                        <p>Sanal oyun içi Kaisei paranızı %50 şansla yazı-tura atarak katlamayı deneyin.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/coinflip')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/leaderboard</h4>
+                        <p>Sunucudaki en güçlü oyuncuların Reiatsu sıralamasını gösterir.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/leaderboard')">Kopyala</button>
+                </div>
+            </div>
+
+            <div id="roll" class="tab-content">
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/shinigamiroll</h4>
+                        <p>Klan roll hakkınızı kullanarak bir Shinigami soyadı çevirirsiniz.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/shinigamiroll')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/hollowroll</h4>
+                        <p>Klan roll hakkınızı kullanarak bir Hollow soyadı çevirirsiniz.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/hollowroll')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/quincyroll</h4>
+                        <p>Klan roll hakkınızı kullanarak bir Quincy soyadı çevirirsiniz.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/quincyroll')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/shikairoll</h4>
+                        <p>Zanpakutō Shikai formunuzu yeniden belirler (1x Shikai Roll Parşömeni harcar).</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/shikairoll')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/resurreccionroll</h4>
+                        <p>Envanterinizdeki Hollow Parşömenini kullanarak Resurrección formunuzu yeniden belirlersiniz.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/resurreccionroll')">Kopyala</button>
+                </div>
+                <div class="cmd-card">
+                    <div class="cmd-info">
+                        <h4>/schriftroll</h4>
+                        <p>Envanterinizdeki Schrift Parşömenini kullanarak Yhwach'tan bir kutsal harf alırsınız.</p>
+                    </div>
+                    <button class="btn-copy" onclick="copyCmd('/schriftroll')">Kopyala</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Bleach: Türkiye RPG — KeishuLand. Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <script>
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        function copyCmd(text) {
+            navigator.clipboard.writeText(text);
+            alert(`'${text}' komutu kopyalandı!`);
+        }
+
+        function filterCommands() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.cmd-card');
+
+            cards.forEach(card => {
+                const cmdName = card.querySelector('h4').textContent.toLowerCase();
+                const cmdDesc = card.querySelector('p').textContent.toLowerCase();
+                
+                if (cmdName.includes(input) || cmdDesc.includes(input)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
