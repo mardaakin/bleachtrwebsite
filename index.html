@@ -4,150 +4,191 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bleach: Türkiye RPG | Spirit Rebirth</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-main: #130f1e; /* Fotoğraftaki koyu mor arka plan */
-            --bg-panel: #1e1830; /* Kart arka planları */
-            --border-color: #2a2244;
+            --bg-deep: #050507;
+            --glass-bg: rgba(18, 18, 24, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.04);
+            --glass-border-hover: rgba(0, 229, 255, 0.3);
             --text-main: #ffffff;
-            --text-muted: #a39eb5;
-            --btn-gradient: linear-gradient(90deg, #ff7e5f, #ff5e7e);
-            --btn-blue: linear-gradient(90deg, #4facfe, #00f2fe);
+            --text-muted: #8b92a5;
+            --accent-cyan: #00e5ff;
+            --accent-glow: rgba(0, 229, 255, 0.15);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body { 
+            background-color: var(--bg-deep); 
+            color: var(--text-main); 
+            overflow-x: hidden; 
+            background-image: radial-gradient(circle at top right, rgba(0, 229, 255, 0.03) 0%, transparent 40%);
+        }
 
-        /* --- ÜST MENÜ --- */
+        /* --- ELİT NAVBAR --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; background: rgba(19, 15, 30, 0.95);
-            border-bottom: 1px solid var(--border-color);
+            padding: 20px 5%; background: rgba(5, 5, 7, 0.85);
+            backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--glass-border);
             position: fixed; width: 100%; top: 0; z-index: 1000;
         }
-        .logo { font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; font-style: italic; display: flex; flex-direction: column; line-height: 1; }
-        .logo span { font-size: 14px; color: #4facfe; font-family: 'Poppins', sans-serif; font-style: normal; }
-        .nav-links { list-style: none; display: flex; gap: 30px; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        
+        .logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 1px; display: flex; flex-direction: column; line-height: 1; }
+        .logo span { font-size: 12px; color: var(--accent-cyan); font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: 2px; margin-top: 2px; }
+        
+        .nav-links { list-style: none; display: flex; gap: 40px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.4s ease; }
         .nav-links a:hover { color: #fff; }
-        .nav-btn { background: var(--btn-blue); color: #fff; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-weight: 600; text-transform: uppercase; }
+        
+        .nav-btn { 
+            background: transparent; color: #fff; padding: 10px 24px; border-radius: 4px; 
+            text-decoration: none; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+            border: 1px solid var(--glass-border); transition: all 0.4s ease;
+        }
+        .nav-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
 
-        /* --- ANA BÖLÜM (İkiye Bölünmüş Düzen) --- */
-        .main-wrapper { max-width: 1600px; margin: 100px auto 0; padding: 0 5%; display: flex; gap: 50px; }
+        /* --- ANA BÖLÜM YERLEŞİMİ --- */
+        .main-wrapper { max-width: 1500px; margin: 120px auto 0; padding: 0 5%; display: flex; gap: 60px; }
         
         /* SOL KOLON */
-        .left-col { flex: 1.2; display: flex; flex-direction: column; gap: 30px; }
+        .left-col { flex: 1.1; display: flex; flex-direction: column; gap: 40px; }
         
-        /* HERO KISMI */
-        .hero-text-area { padding-top: 40px; position: relative; z-index: 2; }
-        .hero-text-area h1 { font-family: 'Oswald', sans-serif; font-size: 3.5rem; line-height: 1.1; text-transform: uppercase; font-style: italic; margin-bottom: 15px; }
-        .hero-text-area h1 span { color: #ff7e5f; }
-        .hero-text-area p { color: var(--text-muted); font-size: 1rem; margin-bottom: 25px; max-width: 90%; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-play { background: var(--btn-gradient); color: #fff; padding: 12px 35px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; display: inline-block; border: none; cursor: pointer; }
+        /* SİNEMATİK HERO METNİ */
+        .hero-text-area { padding-top: 20px; }
+        .hero-text-area h1 { font-family: 'Oswald', sans-serif; font-size: 4rem; line-height: 1.05; text-transform: uppercase; font-weight: 700; margin-bottom: 20px; letter-spacing: -1px; }
+        .hero-text-area h1 span { background: linear-gradient(90deg, #fff, var(--accent-cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-text-area p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 35px; max-width: 90%; font-weight: 300; line-height: 1.7; }
         
-        /* 4'LÜ ÖZELLİK KARTLARI */
-        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; }
-        .feature-card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px 15px; text-align: center; }
-        .feature-card img { width: 50px; height: 50px; margin-bottom: 15px; filter: drop-shadow(0 0 5px rgba(255,255,255,0.2)); }
-        .feature-card h3 { font-family: 'Oswald', sans-serif; font-size: 1rem; text-transform: uppercase; margin-bottom: 10px; }
-        .feature-card p { font-size: 0.8rem; color: var(--text-muted); }
+        .btn-play { 
+            background: #fff; color: #000; padding: 16px 40px; border-radius: 4px; 
+            text-decoration: none; font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px;
+            display: inline-block; border: none; cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .btn-play:hover { background: var(--accent-cyan); box-shadow: 0 10px 30px var(--accent-glow); transform: translateY(-3px); }
+        
+        /* CAM EFEKTLİ 4'LÜ KARTLAR */
+        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .feature-card { 
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; 
+            padding: 30px 20px; text-align: center; backdrop-filter: blur(12px);
+            transition: all 0.4s ease; position: relative; overflow: hidden;
+        }
+        .feature-card:hover { border-color: var(--glass-border-hover); background: rgba(25, 25, 32, 0.6); box-shadow: 0 15px 30px rgba(0,0,0,0.4); transform: translateY(-5px); }
+        .feature-card span { font-size: 2.2rem; display: block; margin-bottom: 15px; opacity: 0.9; transition: transform 0.4s ease; }
+        .feature-card:hover span { transform: scale(1.1); }
+        .feature-card h3 { font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; font-weight: 500; }
+        .feature-card p { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; line-height: 1.5; }
 
-        /* ARAYÜZ GÖRSELLERİ (Sol Alt Grid) */
-        .screenshots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; padding-bottom: 50px; }
-        .screen-card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
-        .screen-card img { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border-color); }
-        .screen-card h4 { text-align: center; padding: 15px; font-family: 'Oswald', sans-serif; font-size: 1.1rem; }
+        /* ARAYÜZ GÖRSELLERİ (Daha şık çerçeveler) */
+        .screenshots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding-bottom: 60px; }
+        .screen-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; overflow: hidden; transition: all 0.4s ease; }
+        .screen-card:hover { border-color: var(--glass-border-hover); box-shadow: 0 10px 30px var(--accent-glow); }
+        .screen-card img { width: 100%; height: 220px; object-fit: cover; opacity: 0.85; transition: opacity 0.4s ease; }
+        .screen-card:hover img { opacity: 1; }
+        .screen-card h4 { text-align: center; padding: 16px; font-family: 'Oswald', sans-serif; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; border-top: 1px solid var(--glass-border); }
 
         /* SAĞ KOLON */
-        .right-col { flex: 0.8; padding-top: 20px; display: flex; flex-direction: column; gap: 40px; position: relative; }
+        .right-col { flex: 0.9; display: flex; flex-direction: column; gap: 40px; }
         
-        /* KARAKTER GÖRSELİ (Sağ Üstte Taşan Görsel) */
-        .hero-character { width: 100%; height: 450px; background: url('https://i.ibb.co/L9HwVw7/ichigo-render.png') no-repeat bottom center; background-size: contain; margin-top: -80px; position: relative; z-index: 1; }
+        /* KARAKTER GÖRSELİ */
+        .hero-character { width: 100%; height: 500px; background: url('https://i.ibb.co/L9HwVw7/ichigo-render.png') no-repeat bottom center; background-size: contain; margin-top: -60px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); }
         
-        /* NASIL BAŞLANIR */
-        .right-section-title { text-align: center; font-family: 'Oswald', sans-serif; font-size: 2rem; text-transform: uppercase; margin-bottom: 20px; }
-        .steps-container { display: flex; justify-content: space-between; gap: 10px; }
-        .step-box { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; text-align: center; flex: 1; }
-        .step-box span { font-size: 2rem; display: block; margin-bottom: 10px; }
-        .step-box h4 { font-size: 0.85rem; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        /* NASIL BAŞLANIR (Klas Adımlar) */
+        .right-section-title { text-align: left; font-family: 'Oswald', sans-serif; font-size: 1.8rem; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
+        .steps-container { display: flex; justify-content: space-between; gap: 15px; }
+        .step-box { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; padding: 25px 15px; text-align: center; flex: 1; backdrop-filter: blur(12px); transition: 0.3s; }
+        .step-box:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.03); }
+        .step-box span { font-size: 1.8rem; display: block; margin-bottom: 12px; }
+        .step-box h4 { font-size: 0.8rem; font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
 
         /* CANLI DISCORD WIDGET & BUTONLAR */
         .action-buttons { display: flex; flex-direction: column; gap: 15px; }
-        .btn-large { background: var(--bg-panel); border: 1px solid var(--border-color); padding: 20px; border-radius: 12px; text-decoration: none; color: #fff; font-family: 'Oswald', sans-serif; font-size: 1.5rem; text-transform: uppercase; text-align: center; transition: 0.3s; }
-        .btn-large:hover { background: #2a2244; border-color: #ff7e5f; }
+        .widget-wrapper { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; padding: 15px; backdrop-filter: blur(12px); }
+        .widget-wrapper h3 { text-align: center; font-family: 'Oswald', sans-serif; margin-bottom: 15px; color: #fff; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; }
+        
+        .btn-large { 
+            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 20px; 
+            border-radius: 8px; text-decoration: none; color: #fff; font-family: 'Oswald', sans-serif; 
+            font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; text-align: center; transition: all 0.4s ease; 
+        }
+        .btn-large:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+        .btn-large.outline { background: transparent; border-color: var(--accent-cyan); color: var(--accent-cyan); }
+        .btn-large.outline:hover { background: var(--accent-cyan); color: #000; box-shadow: 0 10px 20px var(--accent-glow); }
 
         /* ALT BİLGİ */
-        .footer-mini { display: flex; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 20px; margin-top: 20px; font-size: 0.8rem; color: var(--text-muted); }
+        .footer-mini { display: flex; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 25px; margin-top: 20px; margin-bottom: 40px; font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
+        .footer-mini a { color: var(--text-muted); text-decoration: none; transition: 0.3s; }
+        .footer-mini a:hover { color: #fff; }
         
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="logo">BLEACH:TR <span>DISCORD RPG BOT</span></a>
+        <a href="index.html" class="logo">BLEACH:TR <span>RPG DISCORD BOT</span></a>
         <ul class="nav-links">
             <li><a href="#">Ana Sayfa</a></li>
             <li><a href="#ozellikler">Özellikler</a></li>
             <li><a href="komutlar.html">Rehber</a></li>
         </ul>
-        <a href="https://discord.gg/a4Waxzyuz7" class="nav-btn" target="_blank">Oyuna Gir</a>
+        <a href="https://discord.gg/a4Waxzyuz7" class="nav-btn" target="_blank">Oyuna Bağlan</a>
     </nav>
 
     <div class="main-wrapper">
         <div class="left-col">
             <div class="hero-text-area">
-                <h1>Ruh Enerjini Serbest Bırak!<br><span>Bleach: Türkiye RPG.</span></h1>
-                <p>En gelişmiş MMORPG Discord Botu: Seviye atla, görevleri tamamla ve Muken zindanlarında sınırları zorla.</p>
-                <a href="https://discord.gg/a4Waxzyuz7" class="btn-play" target="_blank">Hemen Başla</a>
+                <h1>Ruh Enerjini Açığa Çıkar<br><span>Mükemmeli Deneyimle.</span></h1>
+                <p>Discord üzerindeki en elit MMORPG altyapısı. Sonsuz zindan katlarını tırman, klanını yönet ve Zanpakutō'nun gerçek potansiyelini keşfet.</p>
+                <a href="https://discord.gg/a4Waxzyuz7" class="btn-play" target="_blank">Maceraya Katıl</a>
             </div>
 
             <div class="features-grid" id="ozellikler">
                 <div class="feature-card">
-                    <span style="font-size: 2.5rem; display:block; margin-bottom:10px;">⚔️</span>
+                    <span>⚔️</span>
                     <h3>Savaş & Farm</h3>
-                    <p>Otomatik savaş mekaniği ve yetenek kullanımı.</p>
+                    <p>Gelişmiş hasar hesaplamaları ve rotasyonlar.</p>
                 </div>
                 <div class="feature-card">
-                    <span style="font-size: 2.5rem; display:block; margin-bottom:10px;">📜</span>
-                    <h3>Görev Sistemi</h3>
-                    <p>Ana hikaye, günlük görevler ve klan savaşları.</p>
+                    <span>📜</span>
+                    <h3>Görev Ağı</h3>
+                    <p>Detaylı hikaye görevleri ve günlük etkinlikler.</p>
                 </div>
                 <div class="feature-card">
-                    <span style="font-size: 2.5rem; display:block; margin-bottom:10px;">🏰</span>
-                    <h3>Zindanlar</h3>
-                    <p>Muken katları ve stratejik boss savaşları.</p>
+                    <span>🏰</span>
+                    <h3>Muken</h3>
+                    <p>Taktiksel boss savaşları ve sonsuz katlar.</p>
                 </div>
                 <div class="feature-card">
-                    <span style="font-size: 2.5rem; display:block; margin-bottom:10px;">🎒</span>
-                    <h3>Envanter</h3>
-                    <p>Eşya filtreleme, market ve depo yönetimi.</p>
+                    <span>🎒</span>
+                    <h3>Ekonomi</h3>
+                    <p>Dinamik market sistemi ve depo optimizasyonu.</p>
                 </div>
             </div>
 
             <div class="screenshots-grid">
                 <div class="screen-card">
-                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=600" alt="Bot Paneli">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=600" alt="Zindan">
                     <h4>Zindan Arayüzü</h4>
                 </div>
                 <div class="screen-card">
-                    <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&q=80&w=600" alt="Yetenek Editörü">
+                    <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&q=80&w=600" alt="Yetenek">
                     <h4>Yetenek Ağacı</h4>
                 </div>
                 <div class="screen-card">
-                    <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=600" alt="Görev Paneli">
+                    <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=600" alt="Loglar">
                     <h4>Savaş Logları</h4>
                 </div>
                 <div class="screen-card">
-                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=600" alt="Envanter">
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=600" alt="Market">
                     <h4>Market & Envanter</h4>
                 </div>
             </div>
         </div>
 
         <div class="right-col">
-            
             <div class="hero-character"></div>
 
             <div>
@@ -169,17 +210,17 @@
             </div>
 
             <div class="action-buttons">
-                <div style="background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; margin-bottom: 10px;">
-                    <h3 style="text-align: center; font-family: 'Oswald', sans-serif; margin-bottom: 10px; color: #fff;">CANLI SUNUCU DURUMU</h3>
-                    <iframe src="https://discord.com/widget?id=1517560912578478112&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" style="border-radius: 8px;"></iframe>
+                <div class="widget-wrapper">
+                    <h3>Sunucu Durumu</h3>
+                    <iframe src="https://discord.com/widget?id=1517560912578478112&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" style="border-radius: 4px; border: none;"></iframe>
                 </div>
 
                 <a href="https://discord.gg/a4Waxzyuz7" target="_blank" class="btn-large">Sunucuya Bağlan</a>
-                <a href="komutlar.html" class="btn-large" style="background: transparent; border-color: #4facfe; color: #4facfe;">Komut Rehberi</a>
+                <a href="komutlar.html" class="btn-large outline">Komut Rehberini İncele</a>
             </div>
 
             <div class="footer-mini">
-                <p>Hızlı Linkler<br><a href="#" style="color:var(--text-muted);">Kurallar</a> | <a href="#" style="color:var(--text-muted);">Destek</a></p>
+                <p>Bağlantılar &bull; <a href="#">Kurallar</a> &bull; <a href="#">Destek</a></p>
                 <p>&copy; 2026 BLEACH:TR RPG. Tüm Hakları Saklıdır.</p>
             </div>
         </div>
