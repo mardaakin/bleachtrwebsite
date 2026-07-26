@@ -4,124 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Komutlar Rehberi | Bleach: Türkiye RPG</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #110e1b;
-            --bg-card: #1c172a;
-            --bg-card-hover: #251e38;
-            --border-color: #2c2541;
+            --bg-base: #030305;
+            --surface: rgba(15, 15, 20, 0.6);
+            --surface-hover: rgba(25, 25, 35, 0.9);
+            --border: rgba(255, 255, 255, 0.05);
+            --border-glow: rgba(0, 229, 255, 0.3);
             --text-main: #ffffff;
-            --text-muted: #9ba1b0;
-            --accent-gradient: linear-gradient(90deg, #ff8a70, #ff5e7e);
-            --accent-shadow: rgba(255, 94, 126, 0.4);
+            --text-dim: #8b92a5;
+            --reiatsu-blue: #00e5ff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* NAVBAR */
+        /* YÜKSEK KALİTE CAM NAVBAR */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; background: #0b0912; border-bottom: 1px solid var(--border-color);
+            padding: 20px 8%; background: rgba(3, 3, 5, 0.8);
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
             position: fixed; width: 100%; top: 0; z-index: 1000;
         }
-        .logo { font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; font-style: italic; }
-        .logo span { color: #ff5e7e; }
-        .btn-back { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; transition: 0.3s; }
+        .logo { font-family: 'Cinzel', serif; font-size: 24px; font-weight: 800; color: #fff; text-decoration: none; }
+        .logo span { color: var(--reiatsu-blue); }
+        .btn-back { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
         .btn-back:hover { color: #fff; }
 
-        /* LAYOUT */
-        .container { display: flex; flex: 1; max-width: 1400px; width: 100%; margin: 120px auto 50px; padding: 0 5%; gap: 40px; }
+        /* ANA YAPI */
+        .container { display: flex; flex: 1; max-width: 1400px; width: 100%; margin: 120px auto 50px; padding: 0 5%; gap: 50px; }
 
-        /* SIDEBAR (Kategoriler) */
-        .sidebar {
-            width: 280px; background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 12px; padding: 25px; height: fit-content;
-        }
-        .sidebar h3 { font-family: 'Oswald', sans-serif; font-size: 1.2rem; color: #fff; margin-bottom: 20px; text-transform: uppercase; }
+        /* YAN MENÜ (Sidebar) */
+        .sidebar { width: 280px; height: fit-content; }
+        .sidebar h3 { font-family: 'Cinzel', serif; font-size: 1.5rem; margin-bottom: 25px; color: #fff; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        
         .tab-btn {
-            width: 100%; padding: 15px; text-align: left; background: transparent; border: 1px solid transparent;
-            border-radius: 8px; color: var(--text-muted); font-size: 0.9rem; font-weight: 600;
-            cursor: pointer; transition: 0.3s; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+            width: 100%; padding: 18px 20px; text-align: left; background: transparent; border: 1px solid transparent;
+            border-radius: 8px; color: var(--text-dim); font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease; margin-bottom: 8px; display: flex; align-items: center; gap: 12px;
         }
-        .tab-btn:hover { background: var(--bg-card-hover); color: #fff; }
-        .tab-btn.active { background: var(--accent-gradient); color: #fff; box-shadow: 0 4px 15px var(--accent-shadow); }
+        .tab-btn:hover { background: var(--surface); color: #fff; }
+        .tab-btn.active { background: var(--surface-hover); color: var(--reiatsu-blue); border: 1px solid var(--border-glow); box-shadow: inset 4px 0 0 var(--reiatsu-blue); }
 
-        /* CONTENT AREA */
+        /* İÇERİK ALANI */
         .main-content { flex: 1; }
-        .header-box h1 { font-family: 'Oswald', sans-serif; font-size: 3rem; margin-bottom: 10px; text-transform: uppercase; font-style: italic; }
-        .header-box p { color: var(--text-muted); margin-bottom: 30px; }
+        .header-box h1 { font-family: 'Cinzel', serif; font-size: 3rem; margin-bottom: 10px; }
+        .header-box p { color: var(--text-dim); margin-bottom: 40px; font-weight: 300; font-size: 1.1rem; }
 
         .search-input {
-            width: 100%; padding: 15px 20px; background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 12px; color: #fff; font-size: 0.95rem; outline: none; transition: 0.3s; margin-bottom: 30px;
+            width: 100%; padding: 20px 25px; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; color: #fff; font-size: 1rem; outline: none; transition: 0.3s; margin-bottom: 40px;
+            backdrop-filter: blur(10px);
         }
-        .search-input:focus { border-color: #ff5e7e; box-shadow: 0 0 10px rgba(255, 94, 126, 0.2); }
+        .search-input:focus { border-color: var(--reiatsu-blue); box-shadow: 0 0 20px rgba(0, 229, 255, 0.1); }
 
-        /* COMMAND CARDS */
+        /* KOMUT KARTLARI */
         .tab-content { display: none; flex-direction: column; gap: 15px; }
-        .tab-content.active { display: flex; }
+        .tab-content.active { display: flex; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
         .cmd-card {
-            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px;
-            padding: 25px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s;
+            background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+            padding: 30px; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
-        .cmd-card:hover { border-color: #ff5e7e; transform: translateX(5px); background: var(--bg-card-hover); }
-        .cmd-info h4 { font-family: 'Oswald', sans-serif; font-size: 1.2rem; color: #ff8a70; margin-bottom: 5px; letter-spacing: 1px; }
-        .cmd-info p { color: var(--text-muted); font-size: 0.9rem; }
+        .cmd-card:hover { border-color: var(--border-glow); transform: translateX(5px); background: var(--surface-hover); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .cmd-info h4 { font-family: 'Cinzel', serif; font-size: 1.3rem; color: #fff; margin-bottom: 8px; letter-spacing: 1px; }
+        .cmd-info p { color: var(--text-dim); font-size: 0.9rem; font-weight: 300; }
         
         .btn-copy {
-            background: #2c2541; border: none; color: #fff; padding: 10px 20px; border-radius: 8px;
-            cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: 0.3s; text-transform: uppercase;
+            background: transparent; border: 1px solid var(--border); color: var(--text-dim); 
+            padding: 10px 25px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; font-weight: 600; 
+            transition: 0.3s; text-transform: uppercase; letter-spacing: 1px;
         }
-        .btn-copy:hover { background: var(--accent-gradient); box-shadow: 0 4px 10px var(--accent-shadow); }
+        .btn-copy:hover { border-color: var(--reiatsu-blue); color: var(--reiatsu-blue); background: rgba(0, 229, 255, 0.05); }
 
-        footer { text-align: center; padding: 30px; background: #0b0912; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid var(--border-color); margin-top: auto; }
+        footer { text-align: center; padding: 40px; color: var(--text-dim); font-size: 0.8rem; border-top: 1px solid var(--border); margin-top: auto; }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="logo">BLEACH <span>RPG BOT</span></a>
-        <a href="index.html" class="btn-back">⬅ Ana Sayfaya Dön</a>
+        <a href="index.html" class="logo">BLEACH<span>TR</span></a>
+        <a href="index.html" class="btn-back">Ana Sayfaya Dön</a>
     </nav>
 
     <div class="container">
         <div class="sidebar">
             <h3>Kategoriler</h3>
-            <button class="tab-btn active" onclick="openTab('savas')">⚔️ Savaş & Zindan</button>
-            <button class="tab-btn" onclick="openTab('karakter')">👤 Karakter & Gelişim</button>
-            <button class="tab-btn" onclick="openTab('ekonomi')">💰 Ekonomi & Market</button>
-            <button class="tab-btn" onclick="openTab('roll')">🔮 Irk & Uyanış (Roll)</button>
+            <button class="tab-btn active" onclick="openTab('savas')">Savaş & Zindan</button>
+            <button class="tab-btn" onclick="openTab('karakter')">Karakter Sistemi</button>
+            <button class="tab-btn" onclick="openTab('ekonomi')">Ekonomi & Envanter</button>
+            <button class="tab-btn" onclick="openTab('roll')">Kader Uyanışları</button>
         </div>
 
         <div class="main-content">
             <div class="header-box">
-                <h1>Oyuncu Komutları</h1>
-                <p>Discord sunucumuzda kullanabileceğiniz tüm oyun komutları ve açıklamaları.</p>
+                <h1>Ruh Kitabesi</h1>
+                <p>Discord sunucumuzdaki tüm sistem komutları ve açıklamaları.</p>
             </div>
             <input type="text" id="searchInput" class="search-input" placeholder="Komut ara... (Örn: /zindan)" onkeyup="filterCommands()">
 
             <div id="savas" class="tab-content active">
-                <div class="cmd-card"><div class="cmd-info"><h4>/zindan</h4><p>Sonsuz Muken Zindanı'na girerek katları tırmanın! (Günde 3 Hak)</p></div><button class="btn-copy" onclick="copyCmd('/zindan')">Kopyala</button></div>
+                <div class="cmd-card"><div class="cmd-info"><h4>/zindan</h4><p>Sonsuz Muken Zindanı'na girerek katları tırmanın.</p></div><button class="btn-copy" onclick="copyCmd('/zindan')">Kopyala</button></div>
                 <div class="cmd-card"><div class="cmd-info"><h4>/savaş</h4><p>Mevcut gücünüze uygun bir düşman ile savaşa tutuşursunuz.</p></div><button class="btn-copy" onclick="copyCmd('/savaş')">Kopyala</button></div>
-                <div class="cmd-card"><div class="cmd-info"><h4>/duello</h4><p>Başka bir oyuncuya düello teklif edin.</p></div><button class="btn-copy" onclick="copyCmd('/duello')">Kopyala</button></div>
             </div>
 
             <div id="karakter" class="tab-content">
                 <div class="cmd-card"><div class="cmd-info"><h4>/stats</h4><p>Karakterinizin veya başka bir oyuncunun profil kartını gösterir.</p></div><button class="btn-copy" onclick="copyCmd('/stats')">Kopyala</button></div>
                 <div class="cmd-card"><div class="cmd-info"><h4>/skilltree</h4><p>Yetenek ağacını açarak istatistiklerinizi geliştirin.</p></div><button class="btn-copy" onclick="copyCmd('/skilltree')">Kopyala</button></div>
-                <div class="cmd-card"><div class="cmd-info"><h4>/antrenman</h4><p>Karakterinizi eğiterek saldırı gücünüzü arttırırsınız.</p></div><button class="btn-copy" onclick="copyCmd('/antrenman')">Kopyala</button></div>
             </div>
 
             <div id="ekonomi" class="tab-content">
                 <div class="cmd-card"><div class="cmd-info"><h4>/envanter</h4><p>Sırt çantanızdaki eşyaları görüntüler, kullanır veya satar.</p></div><button class="btn-copy" onclick="copyCmd('/envanter')">Kopyala</button></div>
-                <div class="cmd-card"><div class="cmd-info"><h4>/market</h4><p>KeishuLand marketinden alışveriş yapın.</p></div><button class="btn-copy" onclick="copyCmd('/market')">Kopyala</button></div>
-                <div class="cmd-card"><div class="cmd-info"><h4>/cüzdan</h4><p>Kendi Keishi ve Kaisei bakiyelerinizi gösterir.</p></div><button class="btn-copy" onclick="copyCmd('/cüzdan')">Kopyala</button></div>
+                <div class="cmd-card"><div class="cmd-info"><h4>/market</h4><p>Gelişim eşyaları satın alın.</p></div><button class="btn-copy" onclick="copyCmd('/market')">Kopyala</button></div>
             </div>
 
             <div id="roll" class="tab-content">
-                <div class="cmd-card"><div class="cmd-info"><h4>/shinigamiroll</h4><p>Klan roll hakkınızı kullanarak bir Shinigami soyadı çevirirsiniz.</p></div><button class="btn-copy" onclick="copyCmd('/shinigamiroll')">Kopyala</button></div>
                 <div class="cmd-card"><div class="cmd-info"><h4>/shikairoll</h4><p>Zanpakutō Shikai formunuzu yeniden belirler.</p></div><button class="btn-copy" onclick="copyCmd('/shikairoll')">Kopyala</button></div>
                 <div class="cmd-card"><div class="cmd-info"><h4>/resurreccionroll</h4><p>Hollow formunuzu (Resurrección) yeniden belirler.</p></div><button class="btn-copy" onclick="copyCmd('/resurreccionroll')">Kopyala</button></div>
             </div>
@@ -141,7 +142,7 @@
         }
         function copyCmd(text) {
             navigator.clipboard.writeText(text);
-            alert(`'${text}' komutu kopyalandı!`);
+            alert(`'${text}' kopyalandı.`);
         }
         function filterCommands() {
             const input = document.getElementById('searchInput').value.toLowerCase();
