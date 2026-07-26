@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bleach: Türkiye - Official RPG</title>
+    <title>Bleach: Türkiye RPG | Spirit Rebirth</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@300;500;700&display=swap');
 
@@ -24,15 +24,16 @@
         }
 
         body, html {
-    width: 100%;
-    height: 100%; /* <-- This is the culprit */
-    background-color: var(--bg-deep);
-    font-family: 'Rajdhani', sans-serif;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+            width: 100vw;
+            height: 100vh;
+            min-height: 700px;
+            background-color: var(--bg-deep);
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
         /* Ambient Environment Layers */
         .environment {
@@ -57,6 +58,103 @@
                 transparent 180deg);
             animation: rotateRays 60s linear infinite;
             z-index: 2;
+        }
+
+        /* Top Navigation Menu */
+        .top-nav {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: linear-gradient(to bottom, rgba(5,5,8,0.8), transparent);
+        }
+
+        .nav-logo {
+            font-family: 'Cinzel Decorative', serif;
+            color: var(--silver);
+            font-size: 1.5rem;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .nav-logo span {
+            color: var(--reiatsu-cyan);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            display: block;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            color: rgba(224, 230, 237, 0.7);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--reiatsu-cyan);
+            text-shadow: 0 0 10px var(--reiatsu-cyan);
+        }
+
+        /* Launcher Side Panel (Discord & Steps) */
+        .launcher-panel {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 320px;
+            background: rgba(10, 10, 15, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            z-index: 20;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0, 229, 255, 0.05);
+        }
+
+        .panel-title {
+            color: var(--silver);
+            font-size: 1.2rem;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+
+        .steps-list {
+            margin-top: 15px;
+            list-style: none;
+            color: rgba(224, 230, 237, 0.7);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .steps-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .steps-list li span {
+            color: var(--reiatsu-cyan);
+            font-weight: bold;
         }
 
         /* Magic Seals & HUD Elements */
@@ -104,6 +202,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            /* Shift slightly left to balance the right panel */
+            margin-left: -150px; 
         }
 
         .logo {
@@ -114,10 +214,11 @@
             margin-bottom: 10px;
             
             /* Metallic Gradient Texture */
-background: linear-gradient(to bottom, #ffffff 0%, #b0c4de 40%, #7a8b99 50%, #dbe4eb 60%, #ffffff 100%);
-background-clip: text; /* Add this standard property */
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
+            background: linear-gradient(to bottom, #ffffff 0%, #b0c4de 40%, #7a8b99 50%, #dbe4eb 60%, #ffffff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
             /* Atmospheric Glow */
             filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.4)) drop-shadow(0 0 30px rgba(0, 85, 255, 0.2));
             animation: pulseGlow 4s ease-in-out infinite alternate;
@@ -132,6 +233,7 @@ background-clip: text; /* Add this standard property */
             text-transform: uppercase;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             position: relative;
+            margin-bottom: 40px;
         }
 
         .subtitle::before, .subtitle::after {
@@ -145,6 +247,29 @@ background-clip: text; /* Add this standard property */
 
         .subtitle::before { left: -180px; }
         .subtitle::after { right: -180px; }
+
+        .btn-play {
+            background: rgba(0, 229, 255, 0.1);
+            border: 1px solid var(--reiatsu-cyan);
+            color: #fff;
+            padding: 15px 50px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.3), inset 0 0 10px rgba(0, 229, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-play:hover {
+            background: rgba(0, 229, 255, 0.3);
+            box-shadow: 0 0 40px rgba(0, 229, 255, 0.6), inset 0 0 20px rgba(0, 229, 255, 0.4);
+            transform: scale(1.05);
+        }
 
         /* HUD RPG Elements */
         .rpg-hud {
@@ -166,6 +291,7 @@ background-clip: text; /* Add this standard property */
             font-size: 0.9rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
+            text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
         }
@@ -218,6 +344,15 @@ background-clip: text; /* Add this standard property */
     <div class="environment"></div>
     <div class="volumetric-rays"></div>
 
+    <nav class="top-nav">
+        <a href="#" class="nav-logo">BLEACH:TR <span>DISCORD RPG BOT</span></a>
+        <ul class="nav-links">
+            <li><a href="#">Ana Sayfa</a></li>
+            <li><a href="#ozellikler">Özellikler</a></li>
+            <li><a href="komutlar.html">Rehber</a></li>
+        </ul>
+    </nav>
+
     <div class="ui-seals">
         <div class="seal outer"></div>
         <div class="seal middle"></div>
@@ -228,40 +363,50 @@ background-clip: text; /* Add this standard property */
 
     <div class="logo-container">
         <h1 class="logo">BLEACH: TÜRKİYE</h1>
-        <div class="subtitle">Official Roleplay Server</div>
+        <div class="subtitle">Ruh Enerjini Serbest Bırak!</div>
+        <a href="https://discord.gg/a4Waxzyuz7" target="_blank" class="btn-play">HEMEN BAŞLA</a>
     </div>
 
-    <div class="rpg-hud">
+    <div class="launcher-panel">
+        <div class="panel-title">Canlı Sunucu Durumu</div>
+        <iframe src="https://discord.com/widget?id=1517560912578478112&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" style="border-radius: 8px; border: none;"></iframe>
+        
+        <ul class="steps-list">
+            <li><span>1.</span> Sunucuya Katıl</li>
+            <li><span>2.</span> Irkını Seç</li>
+            <li><span>3.</span> Maceraya Atıl</li>
+        </ul>
+    </div>
+
+    <div class="rpg-hud" id="ozellikler">
         <div class="hud-item">
             <div class="hud-icon" style="color: var(--reiatsu-cyan);"></div>
-            <span>Shikai & Bankai</span>
+            <span>Savaş & Farm</span>
         </div>
         <div class="hud-item">
             <div class="hud-icon" style="color: var(--hollow-crimson);"></div>
-            <span>Hollow Evolution</span>
+            <span>Görev Sistemi</span>
         </div>
         <div class="hud-item">
             <div class="hud-icon" style="color: var(--quincy-blue);"></div>
-            <span>Quincy Schrift</span>
+            <span>Muken Zindanları</span>
         </div>
         <div class="hud-item">
             <div class="hud-icon" style="color: var(--reiatsu-purple);"></div>
-            <span>Clans & Guilds</span>
+            <span>Market & Envanter</span>
         </div>
-        <div class="hud-item">
+        <a href="komutlar.html" class="hud-item" style="color: rgba(224, 230, 237, 0.6);">
             <div class="hud-icon" style="color: var(--silver);"></div>
-            <span>World Economy</span>
-        </div>
+            <span>Komut Rehberi</span>
+        </a>
     </div>
 
     <script>
-        // Reiatsu Particle Engine
         const canvas = document.getElementById('reiatsu-particles');
         const ctx = canvas.getContext('2d');
         
         let width, height;
         let particles = [];
-
         const colors = ['#00e5ff', '#9d00ff', '#ffffff', '#0055ff'];
 
         function init() {
@@ -278,7 +423,7 @@ background-clip: text; /* Add this standard property */
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
                 this.size = Math.random() * 2.5 + 0.5;
-                this.speedY = Math.random() * -1 - 0.5; // Float upwards
+                this.speedY = Math.random() * -1 - 0.5;
                 this.speedX = (Math.random() - 0.5) * 1;
                 this.color = colors[Math.floor(Math.random() * colors.length)];
                 this.opacity = Math.random() * 0.5 + 0.1;
@@ -286,8 +431,6 @@ background-clip: text; /* Add this standard property */
             update() {
                 this.y += this.speedY;
                 this.x += this.speedX;
-                
-                // Reset at bottom when floating out of top bounds
                 if (this.y < 0) {
                     this.y = height;
                     this.x = Math.random() * width;
@@ -316,7 +459,6 @@ background-clip: text; /* Add this standard property */
         }
 
         window.addEventListener('resize', init);
-        
         init();
         animate();
     </script>
