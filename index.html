@@ -3,272 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bleach: Türkiye RPG | KeishuLand</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Cinzel:wght@600;800;900&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <title>Bleach: Türkiye RPG | Gelişmiş Discord Botu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Seireitei Renk Paleti */
-            --bg-deep: #050814; 
-            --bg-card: rgba(13, 20, 36, 0.8);
-            --gold-main: #d4af37;
-            --gold-light: #f9d976;
+            --bg-main: #0d0914; /* Koyu mor/siyah arka plan */
+            --bg-card: #161224; /* Kart arka planları */
+            --border-color: rgba(255, 255, 255, 0.08);
             --text-main: #ffffff;
-            --text-muted: #94a3b8;
-            --border-gold: rgba(212, 175, 55, 0.3);
-            
-            /* Irk Renkleri (Hafifletilmiş) */
-            --shinigami: #f39c12;
-            --hollow: #e74c3c;
-            --quincy: #00e5ff;
+            --text-muted: #9ba1b0;
+            --accent-gradient: linear-gradient(90deg, #ff7e5f, #feb47b); /* Buton rengi */
+            --blue-gradient: linear-gradient(90deg, #4facfe, #00f2fe);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
         body {
-            background-color: var(--bg-deep);
+            background-color: var(--bg-main);
             color: var(--text-main);
             overflow-x: hidden;
-            background-image: radial-gradient(circle at top, rgba(212, 175, 55, 0.05) 0%, var(--bg-deep) 70%);
         }
 
-        /* ÖZEL SCROLLBAR */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-deep); }
-        ::-webkit-scrollbar-thumb { background: var(--gold-main); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--gold-light); }
-
-        /* ZARİF NAVBAR */
+        /* --- NAVBAR --- */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 18px 60px; 
-            background: rgba(5, 8, 20, 0.9);
-            backdrop-filter: blur(15px); 
+            padding: 15px 5%; background: rgba(13, 9, 20, 0.95);
+            border-bottom: 1px solid var(--border-color);
             position: fixed; width: 100%; top: 0; z-index: 1000;
-            border-bottom: 1px solid var(--border-gold);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
-            font-family: 'Cinzel', serif; font-size: 24px; font-weight: 800; letter-spacing: 2px;
-            color: var(--text-main); text-decoration: none; transition: 0.3s;
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700;
+            color: #fff; text-decoration: none; text-transform: uppercase;
         }
-        .logo span { color: var(--gold-main); }
-        .logo:hover { text-shadow: 0 0 15px var(--gold-main); }
+        .logo span { color: #4facfe; }
 
-        .nav-links { list-style: none; display: flex; gap: 35px; }
-        .nav-links a { 
-            color: var(--text-muted); text-decoration: none; font-weight: 500; font-size: 0.9rem; 
-            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
-        }
-        .nav-links a:hover { color: var(--gold-main); }
-        
-        .btn-discord {
-            background: linear-gradient(135deg, var(--gold-main), #b58d22);
-            color: #050814; padding: 10px 26px; border-radius: 4px; 
-            text-decoration: none; font-weight: 600; font-size: 0.9rem; 
-            transition: 0.3s; border: 1px solid var(--gold-light);
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-        .btn-discord:hover { background: var(--gold-light); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); transform: translateY(-2px); }
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        .nav-links a:hover { color: #fff; }
 
-        /* HERO SECTION (ASİL VE SADE) */
+        .btn-primary {
+            background: var(--accent-gradient); color: #fff;
+            padding: 10px 25px; border-radius: 30px; text-decoration: none;
+            font-weight: 700; font-size: 0.9rem; text-transform: uppercase;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none; cursor: pointer; display: inline-block;
+        }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 126, 95, 0.4); }
+
+        /* --- HERO SECTION --- */
         .hero {
-            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 120px 20px 40px; position: relative;
-            background: url('https://images.alphacoders.com/133/1330366.png') no-repeat center center/cover;
-            background-attachment: fixed;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 120px 5% 50px; min-height: 80vh;
+            background: radial-gradient(circle at right center, rgba(79, 172, 254, 0.1) 0%, transparent 60%);
         }
+
+        .hero-content { width: 50%; z-index: 2; }
         
-        .hero::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(5,8,20,0.85) 0%, rgba(5,8,20,1) 100%);
-            z-index: 0;
+        .hero-title {
+            font-family: 'Oswald', sans-serif; font-size: 4rem; line-height: 1.1; 
+            text-transform: uppercase; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
-
-        .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; width: 100%; }
-
-        .badge {
-            border: 1px solid var(--gold-main); color: var(--gold-main);
-            padding: 8px 24px; border-radius: 0; font-size: 0.85rem; font-weight: 500;
-            margin-bottom: 30px; letter-spacing: 3px; text-transform: uppercase;
-            background: rgba(212, 175, 55, 0.05);
-        }
-
-        .hero h1 { 
-            font-family: 'Cinzel', serif; font-size: 4.5rem; line-height: 1.1; margin-bottom: 25px; 
-            font-weight: 800; color: var(--text-main); text-shadow: 0 5px 15px rgba(0,0,0,0.8);
-        }
-        .hero h1 span { color: var(--gold-main); }
-        .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin-bottom: 40px; line-height: 1.8; font-weight: 300; }
-
-        /* BÖLÜM BAŞLIKLARI */
-        .section-title { text-align: center; padding: 100px 20px 50px; position: relative; z-index: 1; }
-        .section-title h2 { font-family: 'Cinzel', serif; font-size: 2.5rem; margin-bottom: 10px; color: var(--gold-main); }
-        .section-title p { color: var(--text-muted); font-size: 1rem; font-weight: 300; }
-
-        /* ZARİF KART TASARIMI */
-        .races-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        .hero-title span { color: #ff7e5f; }
         
-        .race-card {
-            background: var(--bg-card); border: 1px solid var(--border-gold); 
-            border-radius: 4px; width: 340px; padding: 40px 30px;
-            text-align: center; transition: all 0.4s ease;
-            position: relative; overflow: hidden;
+        .hero-desc { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; line-height: 1.6; max-width: 90%; }
+        
+        .hero-image { width: 50%; display: flex; justify-content: flex-end; position: relative; z-index: 1; }
+        .hero-image img { max-width: 100%; max-height: 700px; object-fit: contain; filter: drop-shadow(0 0 30px rgba(0,0,0,0.5)); }
+
+        .action-group { display: flex; gap: 20px; align-items: center; }
+        .btn-secondary {
+            display: flex; align-items: center; gap: 8px;
+            color: #fff; text-decoration: none; font-weight: 600; font-size: 1rem;
+            transition: 0.3s;
+        }
+        .btn-secondary:hover { color: #4facfe; }
+
+        /* --- 4'LÜ ÖZELLİK KARTLARI (Görseldeki Gibi) --- */
+        .features-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+            padding: 0 5% 80px; margin-top: -40px; position: relative; z-index: 3;
         }
 
-        .race-card::after {
-            content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-            width: 0; height: 2px; background: var(--gold-main); transition: 0.4s ease;
+        .feature-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 30px 20px; text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        .feature-card:hover { transform: translateY(-10px); border-color: #4facfe; }
+        
+        .feature-icon { font-size: 3rem; margin-bottom: 15px; }
+        .feature-card h3 { font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; color: #fff; }
+        .feature-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* --- NASIL BAŞLANIR (Sağ Taraftaki Kısım Mantığı) --- */
+        .how-to-start {
+            padding: 60px 5%; background: rgba(0,0,0,0.3);
+            border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
+        }
+        .section-header { text-align: center; margin-bottom: 40px; font-family: 'Oswald', sans-serif; font-size: 2.5rem; text-transform: uppercase; }
+
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center; }
+        .step-card {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 40px 20px;
+        }
+        .step-icon { width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+        .step-card h4 { font-size: 1.2rem; text-transform: uppercase; color: #fff; margin-bottom: 10px; }
+
+        /* --- ALT BÖLÜM: BİLGİ & DISCORD --- */
+        .bottom-section {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
+            padding: 80px 5%;
         }
 
-        .race-card:hover { transform: translateY(-10px); background: rgba(20, 28, 48, 0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .race-card:hover::after { width: 100%; }
-
-        .race-icon { font-size: 3rem; margin-bottom: 20px; color: var(--gold-main); }
-        
-        .race-content h3 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 15px; letter-spacing: 1px; color: var(--text-main); }
-        .shinigami:hover h3 { color: var(--shinigami); }
-        .hollow:hover h3 { color: var(--hollow); }
-        .quincy:hover h3 { color: var(--quincy); }
-        
-        .race-content p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; font-weight: 300; }
-
-        /* LİDERLİK TABLOSU */
-        .leaderboard-container { max-width: 900px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
-        .leaderboard-table { width: 100%; border-collapse: collapse; }
-        
-        .leaderboard-table th { 
-            padding: 15px 20px; text-align: left; color: var(--gold-main); 
-            font-weight: 500; font-size: 0.9rem; letter-spacing: 1px; text-transform: uppercase;
-            border-bottom: 1px solid var(--border-gold);
+        .discord-widgets { display: flex; flex-direction: column; gap: 20px; }
+        .big-btn {
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            padding: 25px; border-radius: 12px; display: flex; justify-content: space-between;
+            align-items: center; text-decoration: none; color: #fff; transition: 0.3s;
         }
-        .leaderboard-table td { 
-            padding: 18px 20px; background: rgba(13, 20, 36, 0.4); 
-            border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.3s;
-        }
-        
-        .leaderboard-table tr:hover td { background: rgba(212, 175, 55, 0.05); }
-        
-        .rank { font-family: 'Cinzel', serif; font-weight: bold; font-size: 1.2rem; }
-        .rank-1 { color: var(--gold-main); font-size: 1.4rem; }
-        .rank-2 { color: #cbd5e1; }
-        .rank-3 { color: #b45309; }
+        .big-btn:hover { background: rgba(255,255,255,0.05); border-color: #ff7e5f; }
+        .big-btn h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; text-transform: uppercase; margin: 0; }
+        .big-btn span { font-size: 1.5rem; }
 
-        /* FOOTER */
-        footer { text-align: center; padding: 40px; background: #03050a; color: #64748b; font-size: 0.85rem; margin-top: 100px; border-top: 1px solid rgba(255,255,255,0.02); }
+        .updates-list { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; }
+        .updates-list h3 { font-family: 'Oswald', sans-serif; font-size: 1.8rem; text-transform: uppercase; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .update-item { margin-bottom: 20px; }
+        .update-item h4 { color: #4facfe; margin-bottom: 5px; }
+        .update-item p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* --- FOOTER --- */
+        footer { padding: 30px 5%; background: #08060c; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); }
+        footer p { color: var(--text-muted); font-size: 0.8rem; }
+        .footer-links a { color: var(--text-muted); text-decoration: none; margin-left: 20px; font-size: 0.85rem; }
+
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="index.html" class="logo">BLEACH<span>:TR</span></a>
+        <a href="#" class="logo">BLEACH<span>:TR</span></a>
         <ul class="nav-links">
-            <li><a href="#irklar">Sınıflar</a></li>
-            <li><a href="#liderlik">Sıralama</a></li>
+            <li><a href="#home">Ana Sayfa</a></li>
+            <li><a href="#features">Özellikler</a></li>
             <li><a href="komutlar.html">Rehber</a></li>
+            <li><a href="#updates">Güncellemeler</a></li>
         </ul>
-        <a href="https://discord.gg/a4Waxzyuz7
-" target="_blank" class="btn-discord">Discord'a Katıl</a>
+        <a href="https://discord.gg/SENIN_LINKIN" target="_blank" class="btn-primary">Discord'a Katıl</a>
     </nav>
 
-    <section class="hero">
+    <section class="hero" id="home">
         <div class="hero-content">
-            <div class="badge" data-aos="fade-down" data-aos-duration="1000">Gotei 13 Karargahı</div>
-            <h1 data-aos="zoom-in" data-aos-duration="1200">Asaletini <br><span>Kanıtla.</span></h1>
-            <p data-aos="fade-up" data-aos-duration="1400" data-aos-delay="200">Sonsuz Muken Zindanı'nda onur ve güç için savaş. Zanpakutō'nun gerçek adını öğrenme vakti geldi.</p>
+            <h1 class="hero-title">Ruh Enerjini Serbest Bırak! <br><span>Kaderini Yaz.</span></h1>
+            <p class="hero-desc">En gelişmiş Türkçe Bleach MMORPG Discord botu. Sonsuz Muken zindanı, detaylı klan savaşları ve yetenek ağacı ile maceraya hemen başla.</p>
             
-            <div data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400" style="display: flex; justify-content: center; width: 100%; margin-top: 20px;">
-                <iframe src="https://discord.com/widget?id=1517560912578478112&theme=dark" width="380" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" style="border-radius: 4px; border: 1px solid var(--border-gold); box-shadow: 0 10px 30px rgba(0,0,0,0.5);"></iframe>
+            <div class="action-group">
+                <a href="https://discord.gg/SENIN_LINKIN" class="btn-primary">Oyuna Katıl</a>
+                <a href="komutlar.html" class="btn-secondary">▶ Komutları İncele</a>
+            </div>
+        </div>
+        
+        <div class="hero-image">
+            <img src="https://i.ibb.co/L9HwVw7/ichigo-render.png" alt="Bleach Character" onerror="this.src='https://images.alphacoders.com/133/1330366.png'; this.style.borderRadius='12px';">
+        </div>
+    </section>
+
+    <section class="features-grid" id="features">
+        <div class="feature-card">
+            <div class="feature-icon">⚔️</div>
+            <h3>Zindan Sistemi</h3>
+            <p>Otomatik savaş sistemi ile bossları alt et, eşya düşür ve Muken'in zirvesine tırman.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📜</div>
+            <h3>Karakter Gelişimi</h3>
+            <p>Yetenek ağacı ile statlarını belirle, kılıç ustalığını ve Kido sanatlarını geliştir.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔮</div>
+            <h3>Irk Uyanışları</h3>
+            <p>Shikai, Bankai, Resurrección veya Vollständig formlarını uyandırarak gücünü katla.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎒</div>
+            <h3>Gelişmiş Market</h3>
+            <p>Düşürdüğün eşyaları sat, iksirler al ve zindan için karakterini donat.</p>
+        </div>
+    </section>
+
+    <section class="how-to-start">
+        <h2 class="section-header">Nasıl Başlanır?</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-icon">⬇️</div>
+                <h4>1. Sunucuya Katıl</h4>
+                <p style="color: #9ba1b0; font-size: 0.85rem;">Discord sunucumuza katılarak Bleach evrenine ilk adımını at.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">⚙️</div>
+                <h4>2. Irkını Belirle</h4>
+                <p style="color: #9ba1b0; font-size: 0.85rem;">Shinigami, Hollow veya Quincy roll komutları ile klanını seç.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">🚀</div>
+                <h4>3. Zindana Gir</h4>
+                <p style="color: #9ba1b0; font-size: 0.85rem;">/zindan komutunu kullanarak düşmanlarla savaşmaya başla.</p>
             </div>
         </div>
     </section>
 
-    <section id="irklar">
-        <div class="section-title" data-aos="fade-up">
-            <h2>Efsanevi Sınıflar</h2>
-            <p>Ruh Cemiyeti, Hueco Mundo veya Gölgeler. Tarafını seç.</p>
-        </div>
-
-        <div class="races-container">
-            <div class="race-card shinigami" data-aos="fade-up" data-aos-delay="100">
-                <div class="race-icon">⚔️</div>
-                <div class="race-content">
-                    <h3>Shinigami</h3>
-                    <p>Zanpakutō ile bağ kur. Shikai ve Bankai formlarını uyandırarak Ruh Cemiyeti'nin onurunu koru ve ruhları arındır.</p>
-                </div>
-            </div>
-
-            <div class="race-card hollow" data-aos="fade-up" data-aos-delay="300">
-                <div class="race-icon">👹</div>
-                <div class="race-content">
-                    <h3>Arrancar</h3>
-                    <p>Maskeni kırıp Vasto Lorde seviyesine evril. Resurrección formunu serbest bırakarak Hueco Mundo'nun hakimi ol.</p>
-                </div>
-            </div>
-
-            <div class="race-card quincy" data-aos="fade-up" data-aos-delay="500">
-                <div class="race-icon">🏹</div>
-                <div class="race-content">
-                    <h3>Quincy</h3>
-                    <p>Yhwach'tan Kutsal Schrift harfini kazan. Reishi okları ve Vollständig uyanışıyla gölgelerin içinden düzeni sağla.</p>
-                </div>
+    <section class="bottom-section" id="updates">
+        <div class="discord-widgets">
+            <a href="https://discord.gg/SENIN_LINKIN" class="big-btn">
+                <h2>Join Our Discord</h2>
+                <span>➔</span>
+            </a>
+            <a href="komutlar.html" class="big-btn">
+                <h2>Komut Rehberi</h2>
+                <span>➔</span>
+            </a>
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; text-align: center;">
+                <h3 style="margin-bottom: 10px; font-family: 'Oswald';">Canlı Oyuncular</h3>
+                <iframe src="https://discord.com/widget?id=SENIN_SUNUCU_IDN&theme=dark" width="100%" height="250" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
             </div>
         </div>
-    </section>
 
-    <section id="liderlik">
-        <div class="section-title" data-aos="fade-up">
-            <h2>🏆 Liderlik Tablosu</h2>
-            <p>Ruh enerjisi en yüksek olan savaşçılar.</p>
-        </div>
-
-        <div class="leaderboard-container" data-aos="zoom-in" data-aos-delay="200">
-            <table class="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Oyuncu</th>
-                        <th>Irk</th>
-                        <th>Seviye</th>
-                        <th>Kat</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="rank rank-1">I</td>
-                        <td style="font-weight: 500;">Odekai</td>
-                        <td style="color: var(--shinigami);">Shinigami</td>
-                        <td style="color: var(--text-muted);">Lv. 45</td>
-                        <td style="color: var(--gold-main);">Kat 32</td>
-                    </tr>
-                    <tr>
-                        <td class="rank rank-2">II</td>
-                        <td style="font-weight: 500;">Arda</td>
-                        <td style="color: var(--hollow);">Hollow</td>
-                        <td style="color: var(--text-muted);">Lv. 41</td>
-                        <td style="color: var(--gold-main);">Kat 28</td>
-                    </tr>
-                    <tr>
-                        <td class="rank rank-3">III</td>
-                        <td style="font-weight: 500;">Keishu</td>
-                        <td style="color: var(--quincy);">Quincy</td>
-                        <td style="color: var(--text-muted);">Lv. 38</td>
-                        <td style="color: var(--gold-main);">Kat 25</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="updates-list">
+            <h3>Son Güncellemeler</h3>
+            <div class="update-item">
+                <h4>V1.2 — Zindan & Market Güncellemesi</h4>
+                <p>Ağustos 25, 2026</p>
+                <p style="margin-top: 5px;">Zindan sistemi genişletildi. Yeni eşyalar ve Kido yetenekleri markete eklendi.</p>
+            </div>
+            <div class="update-item">
+                <h4>V1.1 — Irk Uyanışları</h4>
+                <p>Ağustos 20, 2026</p>
+                <p style="margin-top: 5px;">Resurrección ve Vollständig formları aktif edildi. Roll sistemi yenilendi.</p>
+            </div>
+            <div class="update-item">
+                <h4>V1.0 — Bleach TR Başlangıç</h4>
+                <p>Ağustos 10, 2026</p>
+                <p style="margin-top: 5px;">Botun temel savaş, kayıt ve envanter sistemleri canlıya alındı.</p>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Bleach: Türkiye RPG — KeishuLand. Tüm Hakları Saklıdır.</p>
+        <p>&copy; 2026 BLEACH:TR RPG. Tüm Hakları Saklıdır. Bu resmi olmayan bir araçtır.</p>
+        <div class="footer-links">
+            <a href="#">Hakkımızda</a>
+            <a href="#">Kurallar</a>
+        </div>
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        AOS.init({ once: true, offset: 50 });
-    </script>
 </body>
 </html>
