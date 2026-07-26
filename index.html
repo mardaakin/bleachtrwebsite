@@ -53,6 +53,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-decoration: none;
         }
 
         .nav-links {
@@ -135,7 +136,7 @@
             line-height: 1.6;
         }
 
-        /* C: CANLI SUNUCU İSTATİSTİKLERİ */
+        /* CANLI SUNUCU İSTATİSTİKLERİ */
         .stats-bar {
             display: flex;
             gap: 40px;
@@ -172,7 +173,7 @@
             color: #707788;
         }
 
-        /* A: LİDERLİK TABLOSU (LEADERBOARD) */
+        /* LİDERLİK TABLOSU */
         .leaderboard-container {
             max-width: 900px;
             margin: 0 auto 50px;
@@ -217,49 +218,7 @@
         .rank-2 { color: #bdc3c7; }
         .rank-3 { color: #e67e22; }
 
-        /* B: İNTERAKTİF WIKI & KOMUT REHBERİ */
-        .wiki-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .wiki-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 25px;
-            width: 320px;
-        }
-
-        .wiki-card h3 {
-            color: #00e5ff;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .wiki-card code {
-            background: rgba(0, 0, 0, 0.5);
-            color: #e74c3c;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-
-        .wiki-card ul {
-            list-style: none;
-            color: #a0a5b5;
-            font-size: 0.9rem;
-            line-height: 1.8;
-        }
-
-        /* E: GÜNCELLEME NOTLARI (PATCH NOTES) */
+        /* GÜNCELLEME NOTLARI */
         .patch-container {
             max-width: 800px;
             margin: 0 auto 80px;
@@ -309,14 +268,14 @@
 <body>
 
     <nav>
-    <div class="logo">BLEACH:TR</div>
-    <ul class="nav-links">
-        <li><a href="#liderlik">Sıralama</a></li>
-        <li><a href="#rehber">Rehber & Komutlar</a></li>
-        <li><a href="#yamalar">Güncellemeler</a></li>
-    </ul>
-    <a href="https://discord.gg/SENIN_LINKIN" target="_blank" class="btn-discord">Discord'a Katıl</a>
-</nav>
+        <a href="index.html" class="logo">BLEACH:TR</a>
+        <ul class="nav-links">
+            <li><a href="#liderlik">Sıralama</a></li>
+            <li><a href="komutlar.html">Komutlar</a></li>
+            <li><a href="#yamalar">Güncellemeler</a></li>
+        </ul>
+        <a href="https://discord.gg/SENIN_LINKIN" target="_blank" class="btn-discord">Discord'a Katıl</a>
+    </nav>
 
     <section class="hero">
         <div class="badge">⚡ DİSCORD MMORPG DENEYİMİ</div>
@@ -390,45 +349,6 @@
         </div>
     </section>
 
-    <section id="rehber">
-        <div class="section-title">
-            <h2>📚 Oyun Rehberi & Komutlar</h2>
-            <p>Sistemlerin kullanımı ve komut listesi</p>
-        </div>
-
-        <div class="wiki-container">
-            <div class="wiki-card">
-                <h3>🏰 Muken Zindanı</h3>
-                <ul>
-                    <li><code>/zindan</code> — Zindana adım atarsınız.</li>
-                    <li>Her gün 3 ücretsiz giriş hakkı.</li>
-                    <li>Yaratıkları keserek XP ve Kaisei kazanın.</li>
-                    <li>Boss katlarından özel ganimetler düşer.</li>
-                </ul>
-            </div>
-
-            <div class="wiki-card">
-                <h3>🎒 Envanter & Market</h3>
-                <ul>
-                    <li><code>/envanter</code> — Eşyalarınızı yönetin.</li>
-                    <li><code>/market</code> — Kaisei ile alışveriş yapın.</li>
-                    <li>Yiyecekler canınızı (HP) doldurur.</li>
-                    <li>Stat eşyaları kalıcı güç kazandırır.</li>
-                </ul>
-            </div>
-
-            <div class="wiki-card">
-                <h3>🔮 Uyanış & Formlar</h3>
-                <ul>
-                    <li><code>/shikairoll</code> — Shinigami uyanışı.</li>
-                    <li><code>/resurreccionroll</code> — Hollow formu.</li>
-                    <li><code>/schriftroll</code> — Quincy harf uyanışı.</li>
-                    <li>Parşömenler marketten alınabilir.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
     <section id="yamalar">
         <div class="section-title">
             <h2>📜 Yama Notları</h2>
@@ -438,11 +358,11 @@
         <div class="patch-container">
             <div class="patch-box">
                 <div class="patch-date">27 Temmuz 2026</div>
-                <div class="patch-title">v1.2 — Muken Zindanı & Market Güncellemesi</div>
+                <div class="patch-title">v1.2 — Muken Zindanı & Komutlar Rehberi</div>
                 <ul class="patch-list">
-                    <li>Zindan Anahtarı markete ve envanter sistemine eklendi.</li>
+                    <li>Gelişmiş sekmeli Komutlar Rehberi web sitesine eklendi.</li>
                     <li>Level atlama XP hesaplamaları güncellendi.</li>
-                    <li>Sağlık ve yiyeçek eşyalarının adet gösterim hatası çözüldü.</li>
+                    <li>Sağlık ve yiyecek eşyalarının adet gösterim hatası çözüldü.</li>
                 </ul>
             </div>
         </div>
