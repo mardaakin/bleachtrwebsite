@@ -1,46 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLEACH: TÜRKİYE | Official MMORPG Experience</title>
+    <title>BLEACH: TÜRKİYE | AAA MMORPG Deneyimi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* =========================================
-           GLOBAL VARIABLES & RESET
-           ========================================= */
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800;900&family=Inter:wght@300;400;600&display=swap');
-
+        /* ==========================================
+           1. DEĞİŞKENLER & TEMEL AYARLAR
+           ========================================== */
         :root {
-            --obsidian: #050508;
-            --pure-black: #000000;
-            --dark-navy: #090e17;
+            --bg-0: #050507;
+            --bg-1: #0c0d14;
+            --bg-2: #12131f;
+            --bg-3: #171826;
+            --bg-4: #1d1e2e;
+            
             --cyan-reiatsu: #00e5ff;
-            --crimson: #d81120;
-            --gold: #ce9b2c;
-            --silver: #e0e5ec;
-            --text-main: #c4d0df;
-            
-            --glass-bg: rgba(9, 14, 23, 0.45);
+            --purple-reiatsu: #9d00ff;
+            --royal-blue: #0044ff;
+            --electric-blue: #0088ff;
+            --gold: #ffd700;
+            --white-light: #ffffff;
+            --red-alert: #ff003c;
+
+            --glass-bg: rgba(12, 13, 20, 0.4);
             --glass-border: rgba(0, 229, 255, 0.15);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
-            
-            --transition-smooth: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none; /* Custom cursor */
+            cursor: none; /* Özel imleç için varsayılanı kapatıyoruz */
         }
 
         body {
-            background-color: var(--pure-black);
-            color: var(--text-main);
+            background-color: var(--bg-0);
+            color: var(--white-light);
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 0%, var(--dark-navy) 0%, var(--pure-black) 80%);
-            scroll-behavior: smooth;
+            background-image: radial-gradient(circle at 50% 50%, var(--bg-1) 0%, var(--bg-0) 100%);
         }
 
         h1, h2, h3, h4, .cinematic-text {
@@ -48,800 +49,376 @@
             text-transform: uppercase;
         }
 
-        /* =========================================
-           CUSTOM CURSOR
-           ========================================= */
-        .cursor-dot, .cursor-outline {
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            z-index: 9999;
-            pointer-events: none;
-        }
+        /* ==========================================
+           2. ÖZEL İMLEÇ (CUSTOM CURSOR)
+           ========================================== */
         .cursor-dot {
-            width: 6px;
-            height: 6px;
-            background-color: var(--cyan-reiatsu);
-            box-shadow: 0 0 10px var(--cyan-reiatsu);
+            width: 8px; height: 8px;
+            background: var(--cyan-reiatsu);
+            box-shadow: 0 0 15px var(--cyan-reiatsu), 0 0 30px var(--cyan-reiatsu);
+            position: fixed; border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
         }
         .cursor-outline {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border: 1px solid rgba(0, 229, 255, 0.5);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            position: fixed; border-radius: 50%;
+            pointer-events: none; z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background 0.2s;
         }
 
-        /* =========================================
-           WORLD BACKGROUND & EFFECTS
-           ========================================= */
-        #particle-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            pointer-events: none;
+        /* ==========================================
+           3. SİNEMATİK YÜKLEME EKRANI (LOADER)
+           ========================================== */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg-0); z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1.5s ease-out, visibility 1.5s;
         }
-
-        .fog-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.4;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.1"/></svg>');
-            animation: fogMove 60s linear infinite;
+        .loader-logo {
+            font-size: 3rem; font-family: 'Cinzel', serif; letter-spacing: 10px;
+            color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+            position: relative; animation: pulseLogo 2s infinite alternate;
         }
-
-        @keyframes fogMove {
-            0% { transform: scale(1.1) translate(0, 0); }
-            50% { transform: scale(1.2) translate(-2%, 2%); }
-            100% { transform: scale(1.1) translate(0, 0); }
+        .loader-logo::after {
+            content: 'BLEACH: TÜRKİYE'; position: absolute; left: 0; top: 0;
+            color: var(--cyan-reiatsu); filter: blur(10px); opacity: 0.5;
         }
+        .loader-bar-container {
+            width: 300px; height: 2px; background: rgba(255,255,255,0.1);
+            margin-top: 30px; position: relative; overflow: hidden;
+        }
+        .loader-bar {
+            height: 100%; width: 0%; background: var(--cyan-reiatsu);
+            box-shadow: 0 0 20px var(--cyan-reiatsu);
+            animation: fillBar 3s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+        }
+        @keyframes pulseLogo { 0% { text-shadow: 0 0 10px rgba(0,229,255,0); } 100% { text-shadow: 0 0 30px rgba(0,229,255,0.8); } }
+        @keyframes fillBar { 0% { width: 0%; } 100% { width: 100%; } }
 
-        /* =========================================
-           NAVIGATION
-           ========================================= */
+        /* ==========================================
+           4. 10 KATMANLI DİNAMİK ARKA PLAN
+           ========================================== */
+        .bg-layer {
+            position: fixed; top: -5%; left: -5%; width: 110vw; height: 110vh;
+            pointer-events: none; z-index: -10; background-size: cover; background-position: center;
+        }
+        /* Layer 1-4: Atmosfer (CSS ile simüle edilmiştir, projede buralara imaj eklenebilir) */
+        #layer-stars { background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 50px 50px; animation: rotateBg 200s linear infinite; }
+        #layer-fog { background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.005" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.08"/></svg>'); animation: panFog 60s linear infinite alternate; }
+        #layer-moon { background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.1) 0%, transparent 20%); }
+        #canvas-particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -5; pointer-events: none; }
+        
+        @keyframes rotateBg { 100% { transform: rotate(360deg); } }
+        @keyframes panFog { 0% { transform: scale(1.1) translate(0,0); } 100% { transform: scale(1.3) translate(-2%, 2%); } }
+
+        /* ==========================================
+           5. NAVBAR (GLASSMORPHISM)
+           ========================================== */
         nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 2rem 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, transparent 100%);
-            backdrop-filter: blur(4px);
+            position: fixed; top: 0; width: 100%; padding: 25px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 100; transition: all 0.4s ease;
+            background: linear-gradient(to bottom, rgba(5,5,7,0.9), transparent);
         }
-
-        .nav-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: var(--silver);
-            font-weight: 800;
-            letter-spacing: 4px;
-            text-shadow: 0 0 15px rgba(255,255,255,0.2);
+        nav.scrolled {
+            padding: 15px 50px; background: var(--glass-bg);
+            backdrop-filter: blur(12px); border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
-        }
-
+        .nav-logo { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 900; letter-spacing: 5px; color: var(--white-light); text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
         .nav-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            position: relative;
-            transition: color 0.3s ease;
+            color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;
+            letter-spacing: 2px; text-transform: uppercase; position: relative; transition: color 0.3s;
         }
-
+        .nav-links a:hover { color: var(--cyan-reiatsu); text-shadow: 0 0 10px var(--cyan-reiatsu); }
         .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0%;
-            height: 1px;
-            background: var(--cyan-reiatsu);
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px var(--cyan-reiatsu);
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 1px;
+            background: var(--cyan-reiatsu); box-shadow: 0 0 10px var(--cyan-reiatsu); transition: width 0.3s;
         }
-
-        .nav-links a:hover {
-            color: var(--cyan-reiatsu);
+        .nav-links a:hover::after { width: 100%; }
+        
+        .btn-premium {
+            background: rgba(0, 229, 255, 0.05); border: 1px solid var(--cyan-reiatsu);
+            color: var(--cyan-reiatsu); padding: 12px 30px; font-family: 'Cinzel', serif;
+            font-weight: 700; letter-spacing: 2px; position: relative; overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); text-decoration: none; display: inline-block;
         }
-
-        .nav-links a:hover::after {
-            width: 100%;
+        .btn-premium::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.5), transparent); transition: left 0.5s;
         }
-
-        .btn-play {
-            background: transparent;
-            border: 1px solid var(--cyan-reiatsu);
-            color: var(--cyan-reiatsu);
-            padding: 0.8rem 2.5rem;
-            font-family: 'Cinzel', serif;
-            font-weight: 800;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            position: relative;
-            overflow: hidden;
-            transition: all var(--transition-smooth);
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+        .btn-premium:hover {
+            background: rgba(0, 229, 255, 0.2); box-shadow: 0 0 30px rgba(0, 229, 255, 0.6), inset 0 0 20px rgba(0, 229, 255, 0.4);
+            color: #fff; transform: scale(1.05); text-shadow: 0 0 10px #fff;
         }
+        .btn-premium:hover::before { left: 100%; }
 
-        .btn-play::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.4), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn-play:hover {
-            background: rgba(0, 229, 255, 0.1);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4) inset, 0 0 20px rgba(0, 229, 255, 0.2);
-            text-shadow: 0 0 10px var(--cyan-reiatsu);
-            transform: scale(1.05);
-        }
-
-        .btn-play:hover::before {
-            left: 100%;
-        }
-
-        /* =========================================
-           HERO SECTION
-           ========================================= */
+        /* ==========================================
+           6. HERO SECTION
+           ========================================== */
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            perspective: 1000px;
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: relative; perspective: 1000px; overflow: hidden;
         }
-
         .hero-content {
-            text-align: center;
-            z-index: 10;
-            transform-style: preserve-3d;
-            animation: heroIn 2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+            text-align: center; z-index: 10; transform-style: preserve-3d;
+            animation: heroReveal 2s cubic-bezier(0.19, 1, 0.22, 1) 2.5s both;
         }
-
-        @keyframes heroIn {
-            0% { opacity: 0; transform: translateY(50px) scale(0.95); filter: blur(10px); }
-            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-        }
-
-        .subtitle {
-            font-family: 'Inter', sans-serif;
-            color: var(--cyan-reiatsu);
-            letter-spacing: 12px;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            text-transform: uppercase;
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: 15px;
+            color: var(--cyan-reiatsu); font-size: 1rem; margin-bottom: 20px; text-transform: uppercase;
             text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
         }
-
         .hero-title {
-            font-size: 8rem;
-            font-weight: 900;
-            color: transparent;
-            -webkit-text-stroke: 1px rgba(255,255,255,0.5);
+            font-size: 8rem; font-weight: 900; line-height: 1; margin-bottom: 40px;
+            color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.8);
             background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="%23fff"/></svg>') repeat;
-            background-clip: text;
-            -webkit-background-clip: text;
-            text-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 80px rgba(0, 229, 255, 0.3);
-            letter-spacing: 5px;
-            margin-bottom: 2rem;
+            -webkit-background-clip: text; background-clip: text;
+            text-shadow: 0 20px 50px rgba(0,0,0,0.9), 0 0 100px rgba(0, 229, 255, 0.3);
             position: relative;
         }
-
         .hero-title::after {
-            content: 'BLEACH: TÜRKİYE';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            color: var(--silver);
-            z-index: -1;
-            filter: blur(15px);
-            opacity: 0.5;
+            content: 'BLEACH: TÜRKİYE'; position: absolute; left: 0; top: 0; width: 100%; height: 100%;
+            color: var(--cyan-reiatsu); z-index: -1; filter: blur(20px); opacity: 0.4;
         }
+        .hero-buttons { display: flex; gap: 30px; justify-content: center; }
+        
+        @keyframes heroReveal { 0% { opacity: 0; transform: translateY(100px) scale(0.9) rotateX(10deg); filter: blur(20px); } 100% { opacity: 1; transform: translateY(0) scale(1) rotateX(0deg); filter: blur(0); } }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            opacity: 0.6;
-            animation: bounce 2s infinite ease-in-out;
+        /* ==========================================
+           7. İSTATİSTİKLER (SCROLL REVEAL)
+           ========================================== */
+        .section-divider {
+            height: 150px; width: 100%; position: relative; display: flex; justify-content: center; align-items: center; margin: 50px 0;
         }
-
-        .scroll-indicator span {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
+        .section-divider::before {
+            content: ''; width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--cyan-reiatsu), transparent);
+            box-shadow: 0 0 20px var(--cyan-reiatsu); opacity: 0.5;
         }
-
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--cyan-reiatsu), transparent);
+        
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; padding: 0 10%; position: relative; z-index: 10;
         }
-
-        @keyframes bounce {
-            0%, 100% { transform: translate(-50%, 0); }
-            50% { transform: translate(-50%, 15px); }
-        }
-
-        /* =========================================
-           SERVER STATS (GLASSMORPHISM)
-           ========================================= */
-        .stats-section {
-            padding: 4rem 10%;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            position: relative;
-            z-index: 5;
-        }
-
         .stat-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            padding: 2rem;
-            border-radius: 4px;
-            text-align: center;
-            box-shadow: var(--glass-shadow);
-            position: relative;
-            overflow: hidden;
-            transition: transform var(--transition-smooth), border-color var(--transition-smooth);
+            background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
+            padding: 40px 20px; text-align: center; border-radius: 4px; box-shadow: var(--glass-shadow);
+            transform: translateY(50px); opacity: 0; transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative; overflow: hidden;
         }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--cyan-reiatsu), transparent);
-            opacity: 0.5;
+        .stat-card.visible { transform: translateY(0); opacity: 1; }
+        .stat-card::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
+            background: var(--cyan-reiatsu); transform: scaleX(0); transition: transform 0.5s;
         }
+        .stat-card:hover::after { transform: scaleX(1); }
+        .stat-card:hover { transform: translateY(-10px); border-color: rgba(0, 229, 255, 0.5); box-shadow: 0 15px 40px rgba(0, 229, 255, 0.15); }
+        
+        .stat-number { font-family: 'Cinzel', serif; font-size: 3.5rem; color: var(--white-light); text-shadow: 0 0 20px rgba(255,255,255,0.3); margin-bottom: 10px; }
+        .stat-label { font-size: 0.85rem; color: var(--cyan-reiatsu); letter-spacing: 3px; text-transform: uppercase; }
 
-        .stat-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(0, 229, 255, 0.4);
+        /* ==========================================
+           8. ÖZEL KARTLAR (Bölüm 2 için altyapı)
+           ========================================== */
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 100px 10%; perspective: 1500px; }
+        .feature-card {
+            height: 400px; background: var(--bg-2); border: 1px solid rgba(255,255,255,0.05);
+            position: relative; transform-style: preserve-3d; transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            opacity: 0; transform: translateY(100px) rotateX(10deg);
         }
+        .feature-card.visible { opacity: 1; transform: translateY(0) rotateX(0deg); }
+        /* Kart içerikleri ve detaylı 3D hover efektleri bir sonraki aşamada eklenecek */
 
-        .stat-value {
-            font-family: 'Cinzel', serif;
-            font-size: 2.5rem;
-            color: var(--silver);
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 15px rgba(255,255,255,0.2);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--cyan-reiatsu);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* =========================================
-           FACTIONS / CLASSES
-           ========================================= */
-        .section-title {
-            text-align: center;
-            font-size: 3rem;
-            margin: 6rem 0 4rem 0;
-            color: var(--silver);
-            text-shadow: 0 0 20px rgba(255,255,255,0.1);
-        }
-
-        .factions-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-            padding: 0 5%;
-            perspective: 1500px;
-        }
-
-        .faction-card {
-            height: 600px;
-            position: relative;
-            background: var(--obsidian);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 2px;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .faction-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0.4;
-            transition: opacity 0.8s ease, transform 1s ease;
-            filter: grayscale(80%) contrast(120%);
-        }
-
-        .faction-card:nth-child(1) .faction-bg { background: linear-gradient(to bottom, transparent, var(--obsidian)), repeating-linear-gradient(45deg, #0a0a0a 0, #0a0a0a 2px, #000 2px, #000 4px); } /* Shinigami abstract */
-        .faction-card:nth-child(2) .faction-bg { background: linear-gradient(to bottom, transparent, var(--obsidian)), radial-gradient(circle, #111, #000); } /* Quincy abstract */
-        .faction-card:nth-child(3) .faction-bg { background: linear-gradient(to bottom, transparent, var(--obsidian)), repeating-radial-gradient(circle, #0a0a0a, #000 10%); } /* Hollow abstract */
-
-        .faction-content {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 3rem 2rem;
-            transform: translateZ(50px);
-            background: linear-gradient(to top, var(--obsidian) 40%, transparent);
-        }
-
-        .faction-title {
-            font-size: 2.5rem;
-            color: var(--silver);
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .faction-desc {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: var(--text-main);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-        }
-
-        /* Hover States for Factions */
-        .faction-card:hover {
-            transform: scale(1.02) rotateX(5deg) rotateY(-5deg);
-            border-color: var(--cyan-reiatsu);
-            box-shadow: 0 20px 50px rgba(0, 229, 255, 0.1), inset 0 0 40px rgba(0, 229, 255, 0.05);
-            z-index: 10;
-        }
-
-        .faction-card:nth-child(2):hover {
-            border-color: var(--gold);
-            box-shadow: 0 20px 50px rgba(206, 155, 44, 0.1), inset 0 0 40px rgba(206, 155, 44, 0.05);
-        }
-
-        .faction-card:nth-child(3):hover {
-            border-color: var(--crimson);
-            box-shadow: 0 20px 50px rgba(216, 17, 32, 0.1), inset 0 0 40px rgba(216, 17, 32, 0.05);
-        }
-
-        .faction-card:hover .faction-bg {
-            opacity: 0.8;
-            transform: scale(1.1);
-            filter: grayscale(0%) contrast(100%);
-        }
-
-        .faction-card:hover .faction-desc {
-            opacity: 1;
-            transform: translateY(0);
-            transition-delay: 0.2s;
-        }
-
-        /* =========================================
-           FEATURES / ROADMAP TIMELINE
-           ========================================= */
-        .features-section {
-            padding: 8rem 10%;
-            position: relative;
-        }
-
-        .timeline {
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            width: 2px;
-            background: linear-gradient(to bottom, transparent, var(--cyan-reiatsu), transparent);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -1px;
-        }
-
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            background: inherit;
-            width: 50%;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        .timeline-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .timeline-item:nth-child(odd) { left: 0; text-align: right; }
-        .timeline-item:nth-child(even) { left: 50%; text-align: left; }
-
-        .timeline-content {
-            padding: 30px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            border-radius: 4px;
-            position: relative;
-            box-shadow: var(--glass-shadow);
-        }
-
-        .timeline-content::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: var(--pure-black);
-            border: 2px solid var(--cyan-reiatsu);
-            border-radius: 50%;
-            top: 50%;
-            transform: translateY(-50%);
-            box-shadow: 0 0 15px var(--cyan-reiatsu);
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content::after { right: -49px; }
-        .timeline-item:nth-child(even) .timeline-content::after { left: -49px; }
-
-        .timeline-title {
-            font-family: 'Cinzel', serif;
-            color: var(--silver);
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        /* =========================================
-           FOOTER
-           ========================================= */
-        footer {
-            margin-top: 5rem;
-            padding: 4rem 10%;
-            background: #020203;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .footer-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 2rem;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 2rem;
-            letter-spacing: 5px;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .copyright {
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.3);
-            letter-spacing: 1px;
-        }
-
-        /* =========================================
-           RESPONSIVENESS
-           ========================================= */
-        @media (max-width: 1024px) {
-            .factions-container { grid-template-columns: 1fr; }
-            .hero-title { font-size: 5rem; }
-            .stats-section { grid-template-columns: repeat(2, 1fr); }
-            nav { padding: 1.5rem 2rem; }
-        }
-
-        @media (max-width: 768px) {
-            .timeline::before { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left !important; }
-            .timeline-item:nth-child(even) { left: 0%; }
-            .timeline-item:nth-child(odd) .timeline-content::after, 
-            .timeline-item:nth-child(even) .timeline-content::after { left: -47px; right: auto; }
-            .hero-title { font-size: 3rem; }
-            .nav-links { display: none; } /* Hamburger menu would go here */
-        }
     </style>
 </head>
 <body>
 
+    <div id="loader">
+        <div class="loader-logo">BLEACH: TÜRKİYE</div>
+        <div class="loader-bar-container"><div class="loader-bar"></div></div>
+    </div>
+
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
 
-    <div class="fog-container"></div>
-    <div id="particle-canvas-container">
-        <canvas id="particle-canvas"></canvas>
-    </div>
+    <div class="bg-layer" id="layer-stars"></div>
+    <div class="bg-layer" id="layer-fog"></div>
+    <div class="bg-layer" id="layer-moon"></div>
+    <canvas id="canvas-particles"></canvas>
 
-    <nav>
+    <nav id="navbar">
         <div class="nav-logo">BLEACH</div>
         <ul class="nav-links">
-            <li><a href="#world">The World</a></li>
-            <li><a href="#factions">Factions</a></li>
-            <li><a href="#systems">Game Systems</a></li>
-            <li><a href="#community">Community</a></li>
+            <li><a href="#home">Ana Sayfa</a></li>
+            <li><a href="#universe">Evren</a></li>
+            <li><a href="#features">Özellikler</a></li>
+            <li><a href="#races">Irklar</a></li>
+            <li><a href="#wiki">Wiki</a></li>
         </ul>
-        <button class="btn-play">ENTER SOUL SOCIETY</button>
+        <a href="https://discord.gg/a4Waxzyuz7" target="_blank" class="btn-premium interactable">SUNUCUYA KATIL</a>
     </nav>
 
-    <header class="hero" id="hero">
-        <div class="hero-content" id="hero-content">
-            <div class="subtitle">Official Turkish Server</div>
-            <h1 class="hero-title">BLEACH: TÜRKİYE</h1>
-            <button class="btn-play" style="padding: 1.2rem 4rem; font-size: 1.2rem; margin-top: 2rem;">AWAKEN YOUR POWER</button>
-        </div>
-        <div class="scroll-indicator">
-            <span>Descend</span>
-            <div class="scroll-line"></div>
-        </div>
-    </header>
-
-    <section class="stats-section reveal-element">
-        <div class="stat-card">
-            <div class="stat-value" data-target="15420">0</div>
-            <div class="stat-label">Active Souls</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" data-target="3">0</div>
-            <div class="stat-label">Realms Explored</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" data-target="89240">0</div>
-            <div class="stat-label">Hollows Purified</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value" data-target="99">0</div>
-            <div class="stat-label">Server Uptime (%)</div>
-        </div>
-    </section>
-
-    <section id="factions">
-        <h2 class="section-title reveal-element">Choose Your Path</h2>
-        <div class="factions-container">
-            <div class="faction-card reveal-element" style="transition-delay: 0.1s;">
-                <div class="faction-bg"></div>
-                <div class="faction-content">
-                    <h3 class="faction-title" style="color: var(--cyan-reiatsu);">Shinigami</h3>
-                    <p class="faction-desc">Guardians of the balance. Master Zanjutsu, Hakuda, Hohō, and Kidō. Unveil the true name of your Zanpakutō and achieve Bankai to protect the Soul Society from impending doom.</p>
-                </div>
-            </div>
-            <div class="faction-card reveal-element" style="transition-delay: 0.3s;">
-                <div class="faction-bg"></div>
-                <div class="faction-content">
-                    <h3 class="faction-title" style="color: var(--gold);">Quincy</h3>
-                    <p class="faction-desc">Monks of destruction. Manipulate Reishi from the atmosphere to forge deadly spirit weapons. Awaken your Schrift and enact divine justice upon the Hollows.</p>
-                </div>
-            </div>
-            <div class="faction-card reveal-element" style="transition-delay: 0.5s;">
-                <div class="faction-bg"></div>
-                <div class="faction-content">
-                    <h3 class="faction-title" style="color: var(--crimson);">Arrancar</h3>
-                    <p class="faction-desc">The evolved evolution. Tear off your mask and claim the powers of Shinigami. Master Cero, Sonído, and unleash your Resurrección to dominate Hueco Mundo.</p>
-                </div>
+    <section class="hero" id="home">
+        <div class="hero-content" id="parallax-target">
+            <h2 class="hero-subtitle">Türkiye'nin En Gelişmiş Discord MMORPG Deneyimi</h2>
+            <h1 class="hero-title">BLEACH:<br>TÜRKİYE</h1>
+            <div class="hero-buttons">
+                <a href="https://discord.gg/a4Waxzyuz7" target="_blank" class="btn-premium interactable" style="padding: 20px 50px; font-size: 1.2rem;">SUNUCUYA KATIL</a>
+                <a href="#commands" class="btn-premium interactable" style="padding: 20px 50px; font-size: 1.2rem; background: transparent; border-color: rgba(255,255,255,0.2); color: #fff;">KOMUTLARI İNCELE</a>
             </div>
         </div>
     </section>
 
-    <section class="features-section" id="systems">
-        <h2 class="section-title reveal-element">A Living, Breathing Universe</h2>
-        <div class="timeline">
-            <div class="timeline-item reveal-element">
-                <div class="timeline-content">
-                    <h3 class="timeline-title">Seamless Open World</h3>
-                    <p>Travel instantaneously between the Human World, Soul Society, and Hueco Mundo without loading screens. Experience dynamic weather influenced by global Reiatsu levels.</p>
-                </div>
-            </div>
-            <div class="timeline-item reveal-element">
-                <div class="timeline-content">
-                    <h3 class="timeline-title">Dynamic Skill Trees</h3>
-                    <p>Forge a unique combat style. Combine hundreds of passive and active abilities. Your Zanpakutō evolves visually and mechanically based on your choices and moral alignment.</p>
-                </div>
-            </div>
-            <div class="timeline-item reveal-element">
-                <div class="timeline-content">
-                    <h3 class="timeline-title">Massive Boss Raids</h3>
-                    <p>Team up with 40 players to challenge Menos Grande, Espada remnants, and rogue Captains in multi-phase, cinematic dungeon encounters requiring perfect coordination.</p>
-                </div>
-            </div>
-            <div class="timeline-item reveal-element">
-                <div class="timeline-content">
-                    <h3 class="timeline-title">Player-Driven Economy</h3>
-                    <p>Control the flow of spiritual resources. Craft legendary artifacts, trade at the central market in Seireitei, or smuggle rare materials through the Dangai.</p>
-                </div>
-            </div>
+    <div class="section-divider"></div>
+
+    <section class="stats-grid">
+        <div class="stat-card interactable reveal-on-scroll">
+            <div class="stat-number" data-target="15420">0</div>
+            <div class="stat-label">Kayıtlı Karakter</div>
+        </div>
+        <div class="stat-card interactable reveal-on-scroll" style="transition-delay: 0.1s;">
+            <div class="stat-number" data-target="89240">0</div>
+            <div class="stat-label">Toplam Savaş</div>
+        </div>
+        <div class="stat-card interactable reveal-on-scroll" style="transition-delay: 0.2s;">
+            <div class="stat-number" data-target="3450">0</div>
+            <div class="stat-label">Kesilen Boss</div>
+        </div>
+        <div class="stat-card interactable reveal-on-scroll" style="transition-delay: 0.3s;">
+            <div class="stat-number" data-target="128">0</div>
+            <div class="stat-label">Kurulu Klan</div>
         </div>
     </section>
-
-    <footer>
-        <div class="footer-logo">BLEACH: TÜRKİYE</div>
-        <div class="footer-links">
-            <a href="#">Patch Notes</a>
-            <a href="#">Support</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Privacy Policy</a>
-        </div>
-        <p class="copyright">© 2026 BLEACH: TÜRKİYE Community Project. Not affiliated with Tite Kubo, Shueisha, TV Tokyo, or Pierrot. Built for the ultimate fan experience.</p>
-    </footer>
 
     <script>
-        // Custom Cursor Logic
-        const cursorDot = document.getElementById('cursor-dot');
-        const cursorOutline = document.getElementById('cursor-outline');
+        // 1. LOADER MANTIĞI
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => { document.getElementById('loader').style.visibility = 'hidden'; }, 1500);
+            }, 3000); // 3 saniyelik sinematik açılış
+        });
+
+        // 2. ÖZEL İMLEÇ (MOUSE TRACKING & HOVER EFEKTLERİ)
+        const dot = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
         
         window.addEventListener('mousemove', (e) => {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            
-            cursorDot.style.left = `${posX}px`;
-            cursorDot.style.top = `${posY}px`;
-            
-            // Slight delay for the outline for organic feel
-            cursorOutline.animate({
-                left: `${posX}px`,
-                top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
+            dot.style.left = `${e.clientX}px`; dot.style.top = `${e.clientY}px`;
+            outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
         });
 
-        // Interactive Cursor Hover Effects
-        const interactables = document.querySelectorAll('a, button, .faction-card');
-        interactables.forEach(el => {
+        document.querySelectorAll('a, .interactable').forEach(el => {
             el.addEventListener('mouseenter', () => {
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                cursorOutline.style.backgroundColor = 'rgba(0, 229, 255, 0.1)';
+                outline.style.transform = 'translate(-50%, -50%) scale(2)';
+                outline.style.backgroundColor = 'rgba(0, 229, 255, 0.1)';
+                outline.style.borderColor = 'rgba(0, 229, 255, 1)';
             });
             el.addEventListener('mouseleave', () => {
-                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursorOutline.style.backgroundColor = 'transparent';
+                outline.style.transform = 'translate(-50%, -50%) scale(1)';
+                outline.style.backgroundColor = 'transparent';
+                outline.style.borderColor = 'rgba(0, 229, 255, 0.5)';
             });
         });
 
-        // Hero Parallax Effect
-        const heroContent = document.getElementById('hero-content');
-        document.addEventListener('mousemove', (e) => {
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 40;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 40;
-            heroContent.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        // 3. NAVBAR GLASSMORPHISM SCROLL EFEKTİ
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
         });
 
-        // Intersection Observer for Cinematic Reveals
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
+        // 4. PARALLAX HERO EFEKTİ (MOUSE İLE)
+        const parallaxTarget = document.getElementById('parallax-target');
+        const layers = document.querySelectorAll('.bg-layer');
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 50;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 50;
+            parallaxTarget.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            
+            // Arkaplan katmanları da hafifçe hareket etsin
+            layers.forEach(layer => {
+                layer.style.transform = `translate(${xAxis * 1.5}px, ${yAxis * 1.5}px)`;
+            });
+        });
 
+        // 5. INTERSECTION OBSERVER (Scroll ile Element Görünürlüğü ve Sayaç Animasyonu)
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
                     
-                    // Counter Animation Trigger
-                    if(entry.target.classList.contains('stats-section')) {
-                        const counters = document.querySelectorAll('.stat-value');
-                        counters.forEach(counter => {
-                            const target = +counter.getAttribute('data-target');
-                            const duration = 2000; // ms
-                            const increment = target / (duration / 16); // 60fps
-                            
-                            let current = 0;
-                            const updateCounter = () => {
-                                current += increment;
-                                if (current < target) {
-                                    counter.innerText = Math.ceil(current).toLocaleString();
-                                    requestAnimationFrame(updateCounter);
-                                } else {
-                                    counter.innerText = target.toLocaleString();
-                                }
-                            };
-                            updateCounter();
-                        });
+                    // Sayaç tetikleyici
+                    if(entry.target.classList.contains('stat-card')) {
+                        const counter = entry.target.querySelector('.stat-number');
+                        const target = +counter.getAttribute('data-target');
+                        let count = 0;
+                        const increment = target / 100; // Hız ayarı
+                        
+                        const updateCount = () => {
+                            count += increment;
+                            if (count < target) {
+                                counter.innerText = Math.ceil(count).toLocaleString('tr-TR');
+                                requestAnimationFrame(updateCount);
+                            } else {
+                                counter.innerText = target.toLocaleString('tr-TR');
+                            }
+                        };
+                        updateCount();
                     }
                     observer.unobserve(entry.target);
                 }
             });
         }, observerOptions);
+        
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
 
-        document.querySelectorAll('.reveal-element').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Advanced Particle Engine (Spiritual Energy / Reiatsu)
-        const canvas = document.getElementById('particle-canvas');
+        // 6. REIATSU PARTICLE ENGINE (CANVAS)
+        const canvas = document.getElementById('canvas-particles');
         const ctx = canvas.getContext('2d');
         let width, height, particles;
 
-        function initCanvas() {
+        function initParticles() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
             particles = [];
             for (let i = 0; i < 150; i++) {
-                particles.push(new Particle());
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    r: Math.random() * 2.5 + 0.5,
+                    dx: (Math.random() - 0.5) * 0.5,
+                    dy: -Math.random() * 1.5 - 0.5, // Yukarı doğru süzülme
+                    alpha: Math.random() * 0.5 + 0.1,
+                    color: Math.random() > 0.2 ? '0, 229, 255' : '157, 0, 255' // Cyan ve Mor Reiatsu
+                });
             }
         }
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * -1.5 - 0.5; // Float upwards
-                this.opacity = Math.random() * 0.5 + 0.1;
-                // Mix of Cyan and Silver particles
-                this.color = Math.random() > 0.3 ? 'rgba(0, 229, 255,' : 'rgba(224, 229, 236,'; 
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.y < 0) {
-                    this.y = height;
-                    this.x = Math.random() * width;
-                }
-            }
-            draw() {
-                ctx.fillStyle = this.color + this.opacity + ')';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function animateParticles() {
+        function drawParticles() {
             ctx.clearRect(0, 0, width, height);
             particles.forEach(p => {
-                p.update();
-                p.draw();
+                p.x += p.dx; p.y += p.dy;
+                if (p.y < 0) { p.y = height; p.x = Math.random() * width; }
+                
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = `rgba(${p.color}, 0.8)`;
+                ctx.fill();
             });
-            requestAnimationFrame(animateParticles);
+            requestAnimationFrame(drawParticles);
         }
 
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
-        animateParticles();
+        window.addEventListener('resize', initParticles);
+        initParticles(); drawParticles();
     </script>
 </body>
 </html>
