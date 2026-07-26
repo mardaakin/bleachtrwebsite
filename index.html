@@ -5,260 +5,169 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bleach: Türkiye RPG | Gelişmiş Discord Botu</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --bg-main: #0d0914; /* Koyu mor/siyah arka plan */
-            --bg-card: #161224; /* Kart arka planları */
-            --border-color: rgba(255, 255, 255, 0.08);
+            --bg-main: #110e1b;
+            --bg-card: #1c172a;
+            --bg-card-hover: #251e38;
+            --border-color: #2c2541;
             --text-main: #ffffff;
             --text-muted: #9ba1b0;
-            --accent-gradient: linear-gradient(90deg, #ff7e5f, #feb47b); /* Buton rengi */
-            --blue-gradient: linear-gradient(90deg, #4facfe, #00f2fe);
+            --accent-gradient: linear-gradient(90deg, #ff8a70, #ff5e7e);
+            --accent-shadow: rgba(255, 94, 126, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; }
 
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* --- NAVBAR --- */
+        /* NAVBAR */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 5%; background: rgba(13, 9, 20, 0.95);
-            border-bottom: 1px solid var(--border-color);
+            padding: 15px 5%; background: #0b0912; border-bottom: 1px solid var(--border-color);
             position: fixed; width: 100%; top: 0; z-index: 1000;
         }
-
-        .logo {
-            display: flex; align-items: center; gap: 10px;
-            font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700;
-            color: #fff; text-decoration: none; text-transform: uppercase;
-        }
-        .logo span { color: #4facfe; }
-
+        .logo { font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; font-style: italic; }
+        .logo span { color: #ff5e7e; }
         .nav-links { list-style: none; display: flex; gap: 30px; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
         .nav-links a:hover { color: #fff; }
-
+        
         .btn-primary {
-            background: var(--accent-gradient); color: #fff;
-            padding: 10px 25px; border-radius: 30px; text-decoration: none;
-            font-weight: 700; font-size: 0.9rem; text-transform: uppercase;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: none; cursor: pointer; display: inline-block;
+            background: var(--accent-gradient); color: #fff; padding: 10px 25px; border-radius: 30px; 
+            text-decoration: none; font-weight: 700; font-size: 0.9rem; text-transform: uppercase;
+            box-shadow: 0 4px 15px var(--accent-shadow); transition: 0.3s; border: none;
         }
-        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 126, 95, 0.4); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--accent-shadow); }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 120px 5% 50px; min-height: 80vh;
-            background: radial-gradient(circle at right center, rgba(79, 172, 254, 0.1) 0%, transparent 60%);
+        /* MAIN LAYOUT (Sol ve Sağ Kolon) */
+        .main-container {
+            display: flex; gap: 40px; padding: 120px 5% 50px; max-width: 1600px; margin: 0 auto;
         }
+        .left-col { flex: 1.2; display: flex; flex-direction: column; gap: 40px; }
+        .right-col { flex: 0.8; display: flex; flex-direction: column; gap: 40px; background: #0b0912; padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); }
 
-        .hero-content { width: 50%; z-index: 2; }
-        
-        .hero-title {
-            font-family: 'Oswald', sans-serif; font-size: 4rem; line-height: 1.1; 
-            text-transform: uppercase; margin-bottom: 20px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
-        .hero-title span { color: #ff7e5f; }
-        
-        .hero-desc { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 40px; line-height: 1.6; max-width: 90%; }
-        
-        .hero-image { width: 50%; display: flex; justify-content: flex-end; position: relative; z-index: 1; }
-        .hero-image img { max-width: 100%; max-height: 700px; object-fit: contain; filter: drop-shadow(0 0 30px rgba(0,0,0,0.5)); }
+        /* HERO BÖLÜMÜ (Sol Kolon) */
+        .hero-title { font-family: 'Oswald', sans-serif; font-size: 4rem; line-height: 1.1; text-transform: uppercase; margin-bottom: 15px; font-style: italic; }
+        .hero-title span { color: #ff5e7e; }
+        .hero-desc { font-size: 1rem; color: var(--text-muted); margin-bottom: 30px; max-width: 90%; text-transform: uppercase; letter-spacing: 1px; }
 
-        .action-group { display: flex; gap: 20px; align-items: center; }
-        .btn-secondary {
-            display: flex; align-items: center; gap: 8px;
-            color: #fff; text-decoration: none; font-weight: 600; font-size: 1rem;
-            transition: 0.3s;
-        }
-        .btn-secondary:hover { color: #4facfe; }
-
-        /* --- 4'LÜ ÖZELLİK KARTLARI (Görseldeki Gibi) --- */
-        .features-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-            padding: 0 5% 80px; margin-top: -40px; position: relative; z-index: 3;
-        }
-
+        /* 4'LÜ KARTLAR (Sol Kolon) */
+        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
         .feature-card {
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 12px; padding: 30px 20px; text-align: center;
-            transition: transform 0.3s, border-color 0.3s;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px;
+            padding: 25px 15px; text-align: center; transition: 0.3s;
         }
-        .feature-card:hover { transform: translateY(-10px); border-color: #4facfe; }
-        
-        .feature-icon { font-size: 3rem; margin-bottom: 15px; }
-        .feature-card h3 { font-size: 1.1rem; text-transform: uppercase; margin-bottom: 10px; color: #fff; }
-        .feature-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+        .feature-card:hover { background: var(--bg-card-hover); border-color: #ff5e7e; }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .feature-card h3 { font-size: 0.9rem; text-transform: uppercase; margin-bottom: 10px; font-family: 'Oswald', sans-serif; }
+        .feature-card p { font-size: 0.8rem; color: var(--text-muted); }
 
-        /* --- NASIL BAŞLANIR (Sağ Taraftaki Kısım Mantığı) --- */
-        .how-to-start {
-            padding: 60px 5%; background: rgba(0,0,0,0.3);
-            border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);
-        }
-        .section-header { text-align: center; margin-bottom: 40px; font-family: 'Oswald', sans-serif; font-size: 2.5rem; text-transform: uppercase; }
+        /* SAĞ KOLON BAŞLIKLARI */
+        .section-header { text-align: center; font-family: 'Oswald', sans-serif; font-size: 2rem; text-transform: uppercase; margin-bottom: 30px; }
 
-        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center; }
-        .step-card {
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 12px; padding: 40px 20px;
-        }
-        .step-icon { width: 80px; height: 80px; background: rgba(255,255,255,0.05); border-radius: 20px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
-        .step-card h4 { font-size: 1.2rem; text-transform: uppercase; color: #fff; margin-bottom: 10px; }
+        /* NASIL BAŞLANIR (Sağ Kolon) */
+        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; text-align: center; margin-bottom: 20px; }
+        .step-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px 10px; }
+        .step-icon { font-size: 2rem; margin-bottom: 10px; }
+        .step-card h4 { font-size: 0.85rem; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
 
-        /* --- ALT BÖLÜM: BİLGİ & DISCORD --- */
-        .bottom-section {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
-            padding: 80px 5%;
-        }
+        /* GÜNCELLEMELER (Sağ Kolon) */
+        .updates-container { display: flex; flex-direction: column; gap: 15px; }
+        .update-item { border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+        .update-item:last-child { border-bottom: none; }
+        .update-item h4 { font-size: 1rem; color: #fff; font-family: 'Oswald', sans-serif; margin-bottom: 5px; }
+        .update-item p { font-size: 0.8rem; color: var(--text-muted); }
 
-        .discord-widgets { display: flex; flex-direction: column; gap: 20px; }
-        .big-btn {
-            background: var(--bg-card); border: 1px solid var(--border-color);
-            padding: 25px; border-radius: 12px; display: flex; justify-content: space-between;
-            align-items: center; text-decoration: none; color: #fff; transition: 0.3s;
-        }
-        .big-btn:hover { background: rgba(255,255,255,0.05); border-color: #ff7e5f; }
-        .big-btn h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; text-transform: uppercase; margin: 0; }
-        .big-btn span { font-size: 1.5rem; }
-
-        .updates-list { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; }
-        .updates-list h3 { font-family: 'Oswald', sans-serif; font-size: 1.8rem; text-transform: uppercase; margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
-        .update-item { margin-bottom: 20px; }
-        .update-item h4 { color: #4facfe; margin-bottom: 5px; }
-        .update-item p { font-size: 0.85rem; color: var(--text-muted); }
-
-        /* --- FOOTER --- */
-        footer { padding: 30px 5%; background: #08060c; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); }
-        footer p { color: var(--text-muted); font-size: 0.8rem; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; margin-left: 20px; font-size: 0.85rem; }
-
+        /* FOOTER */
+        footer { padding: 30px 5%; background: #0b0912; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-muted); font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="logo">BLEACH<span>:TR</span></a>
+        <a href="index.html" class="logo">BLEACH <span>RPG BOT</span></a>
         <ul class="nav-links">
-            <li><a href="#home">Ana Sayfa</a></li>
-            <li><a href="#features">Özellikler</a></li>
-            <li><a href="komutlar.html">Rehber</a></li>
-            <li><a href="#updates">Güncellemeler</a></li>
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li><a href="komutlar.html">Rehber & Komutlar</a></li>
         </ul>
-        <a href="https://discord.gg/SENIN_LINKIN" target="_blank" class="btn-primary">Discord'a Katıl</a>
+        <a href="https://discord.gg/a4Waxzyuz7" target="_blank" class="btn-primary">Discord'a Katıl</a>
     </nav>
 
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1 class="hero-title">Ruh Enerjini Serbest Bırak! <br><span>Kaderini Yaz.</span></h1>
-            <p class="hero-desc">En gelişmiş Türkçe Bleach MMORPG Discord botu. Sonsuz Muken zindanı, detaylı klan savaşları ve yetenek ağacı ile maceraya hemen başla.</p>
-            
-            <div class="action-group">
-                <a href="https://discord.gg/SENIN_LINKIN" class="btn-primary">Oyuna Katıl</a>
-                <a href="komutlar.html" class="btn-secondary">▶ Komutları İncele</a>
+    <div class="main-container">
+        <div class="left-col">
+            <div>
+                <h1 class="hero-title">Ruh Enerjini Serbest Bırak!<br><span>Bleach: Türkiye RPG</span></h1>
+                <p class="hero-desc">En gelişmiş MMORPG Discord Botu: Seviye atla, zindanları temizle ve karakterini zahmetsizce güçlendir.</p>
+                <a href="https://discord.gg/a4Waxzyuz7" target="_blank" class="btn-primary" style="display: inline-block; padding: 15px 35px; font-size: 1.1rem;">Hemen Oyna</a>
             </div>
-        </div>
-        
-        <div class="hero-image">
-            <img src="https://i.ibb.co/L9HwVw7/ichigo-render.png" alt="Bleach Character" onerror="this.src='https://images.alphacoders.com/133/1330366.png'; this.style.borderRadius='12px';">
-        </div>
-    </section>
 
-    <section class="features-grid" id="features">
-        <div class="feature-card">
-            <div class="feature-icon">⚔️</div>
-            <h3>Zindan Sistemi</h3>
-            <p>Otomatik savaş sistemi ile bossları alt et, eşya düşür ve Muken'in zirvesine tırman.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">📜</div>
-            <h3>Karakter Gelişimi</h3>
-            <p>Yetenek ağacı ile statlarını belirle, kılıç ustalığını ve Kido sanatlarını geliştir.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🔮</div>
-            <h3>Irk Uyanışları</h3>
-            <p>Shikai, Bankai, Resurrección veya Vollständig formlarını uyandırarak gücünü katla.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🎒</div>
-            <h3>Gelişmiş Market</h3>
-            <p>Düşürdüğün eşyaları sat, iksirler al ve zindan için karakterini donat.</p>
-        </div>
-    </section>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚔️</div>
+                    <h3>Zindan & Savaş</h3>
+                    <p>Otomatik savaş mekaniği ve yetenek rotasyonları.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3>Görev Sistemi</h3>
+                    <p>Günlük görevler, hikaye modu ve klan savaşları.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏰</div>
+                    <h3>Muken Zindanı</h3>
+                    <p>Özel boss stratejileri ve sonsuz zindan katları.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎒</div>
+                    <h3>Gelişmiş Envanter</h3>
+                    <p>Eşya filtreleme, market ve depo optimizasyonu.</p>
+                </div>
+            </div>
 
-    <section class="how-to-start">
-        <h2 class="section-header">Nasıl Başlanır?</h2>
-        <div class="steps-grid">
-            <div class="step-card">
-                <div class="step-icon">⬇️</div>
-                <h4>1. Sunucuya Katıl</h4>
-                <p style="color: #9ba1b0; font-size: 0.85rem;">Discord sunucumuza katılarak Bleach evrenine ilk adımını at.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-icon">⚙️</div>
-                <h4>2. Irkını Belirle</h4>
-                <p style="color: #9ba1b0; font-size: 0.85rem;">Shinigami, Hollow veya Quincy roll komutları ile klanını seç.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-icon">🚀</div>
-                <h4>3. Zindana Gir</h4>
-                <p style="color: #9ba1b0; font-size: 0.85rem;">/zindan komutunu kullanarak düşmanlarla savaşmaya başla.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="bottom-section" id="updates">
-        <div class="discord-widgets">
-            <a href="https://discord.gg/SENIN_LINKIN" class="big-btn">
-                <h2>Join Our Discord</h2>
-                <span>➔</span>
-            </a>
-            <a href="komutlar.html" class="big-btn">
-                <h2>Komut Rehberi</h2>
-                <span>➔</span>
-            </a>
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; text-align: center;">
-                <h3 style="margin-bottom: 10px; font-family: 'Oswald';">Canlı Oyuncular</h3>
-                <iframe src="https://discord.com/widget?id=SENIN_SUNUCU_IDN&theme=dark" width="100%" height="250" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+            <div style="margin-top: 20px;">
+                <iframe src="https://discord.com/widget?id=1517560912578478112&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" style="border-radius: 12px; border: 1px solid var(--border-color);"></iframe>
             </div>
         </div>
 
-        <div class="updates-list">
-            <h3>Son Güncellemeler</h3>
-            <div class="update-item">
-                <h4>V1.2 — Zindan & Market Güncellemesi</h4>
-                <p>Ağustos 25, 2026</p>
-                <p style="margin-top: 5px;">Zindan sistemi genişletildi. Yeni eşyalar ve Kido yetenekleri markete eklendi.</p>
+        <div class="right-col">
+            <div>
+                <h2 class="section-header">Nasıl Başlanır</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-icon">📥</div>
+                        <h4>1. Sunucuya Katıl</h4>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">⚙️</div>
+                        <h4>2. Irkını Seç</h4>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">🚀</div>
+                        <h4>3. Oyuna Başla</h4>
+                    </div>
+                </div>
             </div>
-            <div class="update-item">
-                <h4>V1.1 — Irk Uyanışları</h4>
-                <p>Ağustos 20, 2026</p>
-                <p style="margin-top: 5px;">Resurrección ve Vollständig formları aktif edildi. Roll sistemi yenilendi.</p>
-            </div>
-            <div class="update-item">
-                <h4>V1.0 — Bleach TR Başlangıç</h4>
-                <p>Ağustos 10, 2026</p>
-                <p style="margin-top: 5px;">Botun temel savaş, kayıt ve envanter sistemleri canlıya alındı.</p>
+
+            <div>
+                <h2 class="section-header" style="text-align: left;">Güncellemeler</h2>
+                <div class="updates-container">
+                    <div class="update-item">
+                        <h4>Bleach RPG Bot v1.2</h4>
+                        <p>27 Temmuz 2026</p>
+                        <p style="margin-top: 5px;">Muken zindanı genişletildi ve yeni animasyonlu web sitemiz canlıya alındı.</p>
+                    </div>
+                    <div class="update-item">
+                        <h4>Irk Uyanışları Aktif</h4>
+                        <p>20 Temmuz 2026</p>
+                        <p style="margin-top: 5px;">Shikai, Bankai, Resurrección ve Vollständig roll sistemleri oyuna entegre edildi.</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <footer>
-        <p>&copy; 2026 BLEACH:TR RPG. Tüm Hakları Saklıdır. Bu resmi olmayan bir araçtır.</p>
-        <div class="footer-links">
-            <a href="#">Hakkımızda</a>
-            <a href="#">Kurallar</a>
-        </div>
+        <p>&copy; 2026 BLEACH:TR RPG. Tüm Hakları Saklıdır.</p>
     </footer>
-
 </body>
 </html>
