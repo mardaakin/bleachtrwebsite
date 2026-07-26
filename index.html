@@ -1,230 +1,324 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bleach: Türkiye RPG | Spirit Rebirth</title>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <title>Bleach: Türkiye - Official RPG</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@300;500;700&display=swap');
+
         :root {
-            --bg-deep: #050507;
-            --glass-bg: rgba(18, 18, 24, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.04);
-            --glass-border-hover: rgba(0, 229, 255, 0.3);
-            --text-main: #ffffff;
-            --text-muted: #8b92a5;
-            --accent-cyan: #00e5ff;
-            --accent-glow: rgba(0, 229, 255, 0.15);
+            --bg-deep: #050508;
+            --reiatsu-cyan: #00e5ff;
+            --reiatsu-purple: #9d00ff;
+            --quincy-blue: #0055ff;
+            --hollow-crimson: #ff003c;
+            --silver: #e0e6ed;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        
-        body { 
-            background-color: var(--bg-deep); 
-            color: var(--text-main); 
-            overflow-x: hidden; 
-            background-image: radial-gradient(circle at top right, rgba(0, 229, 255, 0.03) 0%, transparent 40%);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
         }
 
-        /* --- ELİT NAVBAR --- */
-        nav {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%; background: rgba(5, 5, 7, 0.85);
-            backdrop-filter: blur(24px) saturate(150%); -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid var(--glass-border);
-            position: fixed; width: 100%; top: 0; z-index: 1000;
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-deep);
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        
-        .logo { font-family: 'Oswald', sans-serif; font-size: 26px; font-weight: 700; color: #fff; text-decoration: none; letter-spacing: 1px; display: flex; flex-direction: column; line-height: 1; }
-        .logo span { font-size: 12px; color: var(--accent-cyan); font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: 2px; margin-top: 2px; }
-        
-        .nav-links { list-style: none; display: flex; gap: 40px; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.4s ease; }
-        .nav-links a:hover { color: #fff; }
-        
-        .nav-btn { 
-            background: transparent; color: #fff; padding: 10px 24px; border-radius: 4px; 
-            text-decoration: none; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-            border: 1px solid var(--glass-border); transition: all 0.4s ease;
+
+        /* Ambient Environment Layers */
+        .environment {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 85, 255, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(157, 0, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 100%, rgba(0, 229, 255, 0.15) 0%, transparent 60%);
+            mix-blend-mode: screen;
         }
-        .nav-btn:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
 
-        /* --- ANA BÖLÜM YERLEŞİMİ --- */
-        .main-wrapper { max-width: 1500px; margin: 120px auto 0; padding: 0 5%; display: flex; gap: 60px; }
-        
-        /* SOL KOLON */
-        .left-col { flex: 1.1; display: flex; flex-direction: column; gap: 40px; }
-        
-        /* SİNEMATİK HERO METNİ */
-        .hero-text-area { padding-top: 20px; }
-        .hero-text-area h1 { font-family: 'Oswald', sans-serif; font-size: 4rem; line-height: 1.05; text-transform: uppercase; font-weight: 700; margin-bottom: 20px; letter-spacing: -1px; }
-        .hero-text-area h1 span { background: linear-gradient(90deg, #fff, var(--accent-cyan)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-text-area p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 35px; max-width: 90%; font-weight: 300; line-height: 1.7; }
-        
-        .btn-play { 
-            background: #fff; color: #000; padding: 16px 40px; border-radius: 4px; 
-            text-decoration: none; font-weight: 600; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1.5px;
-            display: inline-block; border: none; cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        .volumetric-rays {
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(from 0deg at 50% 0%, 
+                transparent 0deg, 
+                rgba(0, 229, 255, 0.03) 45deg, 
+                transparent 90deg, 
+                rgba(157, 0, 255, 0.02) 135deg, 
+                transparent 180deg);
+            animation: rotateRays 60s linear infinite;
+            z-index: 2;
         }
-        .btn-play:hover { background: var(--accent-cyan); box-shadow: 0 10px 30px var(--accent-glow); transform: translateY(-3px); }
-        
-        /* CAM EFEKTLİ 4'LÜ KARTLAR */
-        .features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
-        .feature-card { 
-            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; 
-            padding: 30px 20px; text-align: center; backdrop-filter: blur(12px);
-            transition: all 0.4s ease; position: relative; overflow: hidden;
+
+        /* Magic Seals & HUD Elements */
+        .ui-seals {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .feature-card:hover { border-color: var(--glass-border-hover); background: rgba(25, 25, 32, 0.6); box-shadow: 0 15px 30px rgba(0,0,0,0.4); transform: translateY(-5px); }
-        .feature-card span { font-size: 2.2rem; display: block; margin-bottom: 15px; opacity: 0.9; transition: transform 0.4s ease; }
-        .feature-card:hover span { transform: scale(1.1); }
-        .feature-card h3 { font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; font-weight: 500; }
-        .feature-card p { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; line-height: 1.5; }
 
-        /* ARAYÜZ GÖRSELLERİ (Daha şık çerçeveler) */
-        .screenshots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding-bottom: 60px; }
-        .screen-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; overflow: hidden; transition: all 0.4s ease; }
-        .screen-card:hover { border-color: var(--glass-border-hover); box-shadow: 0 10px 30px var(--accent-glow); }
-        .screen-card img { width: 100%; height: 220px; object-fit: cover; opacity: 0.85; transition: opacity 0.4s ease; }
-        .screen-card:hover img { opacity: 1; }
-        .screen-card h4 { text-align: center; padding: 16px; font-family: 'Oswald', sans-serif; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; border-top: 1px solid var(--glass-border); }
-
-        /* SAĞ KOLON */
-        .right-col { flex: 0.9; display: flex; flex-direction: column; gap: 40px; }
-        
-        /* KARAKTER GÖRSELİ */
-        .hero-character { width: 100%; height: 500px; background: url('https://i.ibb.co/L9HwVw7/ichigo-render.png') no-repeat bottom center; background-size: contain; margin-top: -60px; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5)); }
-        
-        /* NASIL BAŞLANIR (Klas Adımlar) */
-        .right-section-title { text-align: left; font-family: 'Oswald', sans-serif; font-size: 1.8rem; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
-        .steps-container { display: flex; justify-content: space-between; gap: 15px; }
-        .step-box { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; padding: 25px 15px; text-align: center; flex: 1; backdrop-filter: blur(12px); transition: 0.3s; }
-        .step-box:hover { border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.03); }
-        .step-box span { font-size: 1.8rem; display: block; margin-bottom: 12px; }
-        .step-box h4 { font-size: 0.8rem; font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: #fff; }
-
-        /* CANLI DISCORD WIDGET & BUTONLAR */
-        .action-buttons { display: flex; flex-direction: column; gap: 15px; }
-        .widget-wrapper { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 8px; padding: 15px; backdrop-filter: blur(12px); }
-        .widget-wrapper h3 { text-align: center; font-family: 'Oswald', sans-serif; margin-bottom: 15px; color: #fff; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; }
-        
-        .btn-large { 
-            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 20px; 
-            border-radius: 8px; text-decoration: none; color: #fff; font-family: 'Oswald', sans-serif; 
-            font-size: 1.2rem; text-transform: uppercase; letter-spacing: 2px; text-align: center; transition: all 0.4s ease; 
+        .seal {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.1), inset 0 0 20px rgba(0, 229, 255, 0.1);
         }
-        .btn-large:hover { background: #fff; color: #000; border-color: #fff; box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
-        .btn-large.outline { background: transparent; border-color: var(--accent-cyan); color: var(--accent-cyan); }
-        .btn-large.outline:hover { background: var(--accent-cyan); color: #000; box-shadow: 0 10px 20px var(--accent-glow); }
 
-        /* ALT BİLGİ */
-        .footer-mini { display: flex; justify-content: space-between; border-top: 1px solid var(--glass-border); padding-top: 25px; margin-top: 20px; margin-bottom: 40px; font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
-        .footer-mini a { color: var(--text-muted); text-decoration: none; transition: 0.3s; }
-        .footer-mini a:hover { color: #fff; }
-        
+        .seal.outer {
+            width: 800px; height: 800px;
+            border-style: dashed;
+            animation: spin 40s linear infinite;
+        }
+
+        .seal.middle {
+            width: 650px; height: 650px;
+            border: 2px solid rgba(157, 0, 255, 0.15);
+            border-style: dotted;
+            animation: spinReverse 30s linear infinite;
+        }
+
+        .seal.inner {
+            width: 500px; height: 500px;
+            border: 1px solid rgba(224, 230, 237, 0.1);
+            animation: spin 20s linear infinite;
+        }
+
+        /* Central Typography Logo */
+        .logo-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 6rem;
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            margin-bottom: 10px;
+            
+            /* Metallic Gradient Texture */
+background: linear-gradient(to bottom, #ffffff 0%, #b0c4de 40%, #7a8b99 50%, #dbe4eb 60%, #ffffff 100%);
+background-clip: text; /* Add this standard property */
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+            /* Atmospheric Glow */
+            filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.4)) drop-shadow(0 0 30px rgba(0, 85, 255, 0.2));
+            animation: pulseGlow 4s ease-in-out infinite alternate;
+        }
+
+        .subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 0.5em;
+            color: var(--silver);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .subtitle::before, .subtitle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--reiatsu-cyan), transparent);
+        }
+
+        .subtitle::before { left: -180px; }
+        .subtitle::after { right: -180px; }
+
+        /* HUD RPG Elements */
+        .rpg-hud {
+            position: absolute;
+            bottom: 50px;
+            width: 80%;
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+        }
+
+        .hud-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: rgba(224, 230, 237, 0.6);
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .hud-item:hover {
+            color: var(--reiatsu-cyan);
+            text-shadow: 0 0 8px var(--reiatsu-cyan);
+        }
+
+        .hud-icon {
+            width: 30px; height: 30px;
+            border: 1px solid currentColor;
+            transform: rotate(45deg);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hud-icon::after {
+            content: '';
+            width: 10px; height: 10px;
+            background: currentColor;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        /* Particle Canvas */
+        #reiatsu-particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* Animations */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spinReverse { 100% { transform: rotate(-360deg); } }
+        @keyframes rotateRays { 100% { transform: rotate(360deg); } }
+        @keyframes pulseGlow {
+            0% { filter: drop-shadow(0 0 15px rgba(0, 229, 255, 0.3)) drop-shadow(0 0 30px rgba(0, 85, 255, 0.1)); }
+            100% { filter: drop-shadow(0 0 25px rgba(0, 229, 255, 0.6)) drop-shadow(0 0 50px rgba(157, 0, 255, 0.3)); }
+        }
+
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="index.html" class="logo">BLEACH:TR <span>RPG DISCORD BOT</span></a>
-        <ul class="nav-links">
-            <li><a href="#">Ana Sayfa</a></li>
-            <li><a href="#ozellikler">Özellikler</a></li>
-            <li><a href="komutlar.html">Rehber</a></li>
-        </ul>
-        <a href="https://discord.gg/a4Waxzyuz7" class="nav-btn" target="_blank">Oyuna Bağlan</a>
-    </nav>
+    <div class="environment"></div>
+    <div class="volumetric-rays"></div>
 
-    <div class="main-wrapper">
-        <div class="left-col">
-            <div class="hero-text-area">
-                <h1>Ruh Enerjini Açığa Çıkar<br><span>Mükemmeli Deneyimle.</span></h1>
-                <p>Discord üzerindeki en elit MMORPG altyapısı. Sonsuz zindan katlarını tırman, klanını yönet ve Zanpakutō'nun gerçek potansiyelini keşfet.</p>
-                <a href="https://discord.gg/a4Waxzyuz7" class="btn-play" target="_blank">Maceraya Katıl</a>
-            </div>
+    <div class="ui-seals">
+        <div class="seal outer"></div>
+        <div class="seal middle"></div>
+        <div class="seal inner"></div>
+    </div>
 
-            <div class="features-grid" id="ozellikler">
-                <div class="feature-card">
-                    <span>⚔️</span>
-                    <h3>Savaş & Farm</h3>
-                    <p>Gelişmiş hasar hesaplamaları ve rotasyonlar.</p>
-                </div>
-                <div class="feature-card">
-                    <span>📜</span>
-                    <h3>Görev Ağı</h3>
-                    <p>Detaylı hikaye görevleri ve günlük etkinlikler.</p>
-                </div>
-                <div class="feature-card">
-                    <span>🏰</span>
-                    <h3>Muken</h3>
-                    <p>Taktiksel boss savaşları ve sonsuz katlar.</p>
-                </div>
-                <div class="feature-card">
-                    <span>🎒</span>
-                    <h3>Ekonomi</h3>
-                    <p>Dinamik market sistemi ve depo optimizasyonu.</p>
-                </div>
-            </div>
+    <canvas id="reiatsu-particles"></canvas>
 
-            <div class="screenshots-grid">
-                <div class="screen-card">
-                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=600" alt="Zindan">
-                    <h4>Zindan Arayüzü</h4>
-                </div>
-                <div class="screen-card">
-                    <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&q=80&w=600" alt="Yetenek">
-                    <h4>Yetenek Ağacı</h4>
-                </div>
-                <div class="screen-card">
-                    <img src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=600" alt="Loglar">
-                    <h4>Savaş Logları</h4>
-                </div>
-                <div class="screen-card">
-                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=600" alt="Market">
-                    <h4>Market & Envanter</h4>
-                </div>
-            </div>
+    <div class="logo-container">
+        <h1 class="logo">BLEACH: TÜRKİYE</h1>
+        <div class="subtitle">Official Roleplay Server</div>
+    </div>
+
+    <div class="rpg-hud">
+        <div class="hud-item">
+            <div class="hud-icon" style="color: var(--reiatsu-cyan);"></div>
+            <span>Shikai & Bankai</span>
         </div>
-
-        <div class="right-col">
-            <div class="hero-character"></div>
-
-            <div>
-                <h2 class="right-section-title">Nasıl Başlanır?</h2>
-                <div class="steps-container">
-                    <div class="step-box">
-                        <span>📥</span>
-                        <h4>1. Sunucuya Katıl</h4>
-                    </div>
-                    <div class="step-box">
-                        <span>⚙️</span>
-                        <h4>2. Irkını Seç</h4>
-                    </div>
-                    <div class="step-box">
-                        <span>🚀</span>
-                        <h4>3. Oyuna Başla</h4>
-                    </div>
-                </div>
-            </div>
-
-            <div class="action-buttons">
-                <div class="widget-wrapper">
-                    <h3>Sunucu Durumu</h3>
-                    <iframe src="https://discord.com/widget?id=1517560912578478112&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" style="border-radius: 4px; border: none;"></iframe>
-                </div>
-
-                <a href="https://discord.gg/a4Waxzyuz7" target="_blank" class="btn-large">Sunucuya Bağlan</a>
-                <a href="komutlar.html" class="btn-large outline">Komut Rehberini İncele</a>
-            </div>
-
-            <div class="footer-mini">
-                <p>Bağlantılar &bull; <a href="#">Kurallar</a> &bull; <a href="#">Destek</a></p>
-                <p>&copy; 2026 BLEACH:TR RPG. Tüm Hakları Saklıdır.</p>
-            </div>
+        <div class="hud-item">
+            <div class="hud-icon" style="color: var(--hollow-crimson);"></div>
+            <span>Hollow Evolution</span>
+        </div>
+        <div class="hud-item">
+            <div class="hud-icon" style="color: var(--quincy-blue);"></div>
+            <span>Quincy Schrift</span>
+        </div>
+        <div class="hud-item">
+            <div class="hud-icon" style="color: var(--reiatsu-purple);"></div>
+            <span>Clans & Guilds</span>
+        </div>
+        <div class="hud-item">
+            <div class="hud-icon" style="color: var(--silver);"></div>
+            <span>World Economy</span>
         </div>
     </div>
 
+    <script>
+        // Reiatsu Particle Engine
+        const canvas = document.getElementById('reiatsu-particles');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+
+        const colors = ['#00e5ff', '#9d00ff', '#ffffff', '#0055ff'];
+
+        function init() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < 150; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedY = Math.random() * -1 - 0.5; // Float upwards
+                this.speedX = (Math.random() - 0.5) * 1;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.opacity = Math.random() * 0.5 + 0.1;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                
+                // Reset at bottom when floating out of top bounds
+                if (this.y < 0) {
+                    this.y = height;
+                    this.x = Math.random() * width;
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', init);
+        
+        init();
+        animate();
+    </script>
 </body>
 </html>
