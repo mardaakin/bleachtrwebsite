@@ -9,144 +9,198 @@
     
     <style>
         :root {
-            --bg-dark: #050608;
-            --card-bg: rgba(15, 18, 25, 0.6);
-            --border-color: rgba(255, 255, 255, 0.05);
-            --shinigami-color: #f39c12;
-            --hollow-color: #e74c3c;
-            --quincy-color: #00e5ff;
+            --bg-dark: #030407;
+            --primary-glow: #00e5ff;
+            --shinigami: #ff9f43;
+            --hollow: #ff4757;
+            --quincy: #00e5ff;
+            --glass-bg: rgba(10, 14, 23, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
 
-        body { background-color: var(--bg-dark); color: #ffffff; overflow-x: hidden; }
+        /* HAREKETLİ ARKA PLAN (ANİMASYONLU) */
+        body {
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(255, 71, 87, 0.05), transparent 25%);
+            background-size: 200% 200%;
+            animation: backgroundShift 15s ease infinite;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
         /* ÖZEL SCROLLBAR */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: rgba(0, 229, 255, 0.2); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--quincy-color); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-glow); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #fff; box-shadow: 0 0 10px var(--primary-glow); }
 
-        /* NAVBAR */
+        /* CAM TASARIM NAVBAR */
         nav {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 60px; background: rgba(5, 6, 8, 0.85);
-            backdrop-filter: blur(20px); position: fixed; width: 100%; top: 0; z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
+            padding: 15px 50px; 
+            background: rgba(3, 4, 7, 0.6);
+            backdrop-filter: blur(25px); 
+            -webkit-backdrop-filter: blur(25px);
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .logo {
-            font-family: 'Cinzel', serif; font-size: 24px; font-weight: 900; letter-spacing: 2px;
-            color: #fff; text-decoration: none; text-shadow: 0 0 15px rgba(255,255,255,0.3);
+            font-family: 'Cinzel', serif; font-size: 26px; font-weight: 900; letter-spacing: 3px;
+            color: #fff; text-decoration: none; text-shadow: 0 0 20px rgba(255,255,255,0.4);
+            transition: 0.3s;
         }
-        .logo span { color: var(--quincy-color); }
+        .logo span { color: var(--primary-glow); text-shadow: 0 0 15px var(--primary-glow); }
+        .logo:hover { transform: scale(1.05); }
 
-        .nav-links { list-style: none; display: flex; gap: 35px; }
-        .nav-links a { color: #8a93a8; text-decoration: none; font-weight: 500; font-size: 0.9rem; transition: 0.3s; }
-        .nav-links a:hover { color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .nav-links { list-style: none; display: flex; gap: 40px; }
+        .nav-links a { 
+            color: #a0a5b5; text-decoration: none; font-weight: 500; font-size: 0.95rem; 
+            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; 
+            position: relative;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; 
+            bottom: -5px; left: 0; background-color: var(--primary-glow); 
+            transition: width 0.3s ease; box-shadow: 0 0 10px var(--primary-glow);
+        }
+        .nav-links a:hover { color: #fff; }
+        .nav-links a:hover::after { width: 100%; }
         
         .btn-discord {
-            background: #5865F2; color: white; padding: 9px 24px; border-radius: 6px; 
-            text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: 0.3s;
+            background: linear-gradient(45deg, #5865F2, #4752C4);
+            color: white; padding: 10px 28px; border-radius: 8px; 
+            text-decoration: none; font-weight: 600; font-size: 0.9rem; 
+            transition: 0.3s; border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.4);
         }
-        .btn-discord:hover { background: #4752C4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
+        .btn-discord:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(88, 101, 242, 0.7); }
 
-        /* HERO SECTION */
+        /* HERO SECTION (EPIC ENTRANCE) */
         .hero {
             min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 120px 20px 60px; position: relative;
-            background: radial-gradient(circle at top, rgba(0, 229, 255, 0.05) 0%, var(--bg-dark) 70%),
-                        url('https://images.alphacoders.com/133/1330366.png') no-repeat center center/cover;
+            background: url('https://images.alphacoders.com/133/1330366.png') no-repeat center center/cover;
             background-attachment: fixed;
         }
+        /* Karanlık Filtre */
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(3,4,7,0.7) 0%, rgba(3,4,7,1) 100%);
+            z-index: 0;
+        }
+
+        .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
 
         .badge {
-            background: rgba(0, 229, 255, 0.05); border: 1px solid rgba(0, 229, 255, 0.2);
-            color: #00e5ff; padding: 6px 18px; border-radius: 30px; font-size: 0.8rem; font-weight: 600;
-            margin-bottom: 25px; letter-spacing: 1px;
+            background: rgba(0, 229, 255, 0.1); border: 1px solid rgba(0, 229, 255, 0.4);
+            color: #00e5ff; padding: 8px 24px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+            margin-bottom: 30px; letter-spacing: 2px; text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); backdrop-filter: blur(5px);
         }
 
-        .hero h1 { font-family: 'Cinzel', serif; font-size: 4.2rem; line-height: 1.1; margin-bottom: 20px; }
-        .hero h1 span { color: var(--hollow-color); }
-        .hero p { font-size: 1.1rem; color: #8a93a8; max-width: 600px; margin-bottom: 40px; line-height: 1.7; }
+        .hero h1 { 
+            font-family: 'Cinzel', serif; font-size: 5rem; line-height: 1.1; margin-bottom: 25px; 
+            text-shadow: 0 15px 30px rgba(0,0,0,0.9); font-weight: 900;
+        }
+        .hero h1 span { 
+            background: linear-gradient(45deg, #ff4757, #ff6b81);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: none; position: relative;
+        }
+        .hero p { font-size: 1.2rem; color: #a0a5b5; max-width: 650px; margin-bottom: 50px; line-height: 1.8; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
 
-        /* CANLI İSTATİSTİKLER */
+        /* CANLI İSTATİSTİKLER (GLASSMORPHISM) */
         .stats-bar {
-            display: flex; gap: 50px; padding: 25px 60px; background: rgba(10, 12, 16, 0.7);
-            border: 1px solid var(--border-color); border-radius: 12px; backdrop-filter: blur(20px);
+            display: flex; gap: 60px; padding: 30px 70px; 
+            background: var(--glass-bg); border: 1px solid var(--glass-border); 
+            border-radius: 20px; backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.02);
         }
-        .stat-item h3 { font-size: 1.8rem; color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .stat-item p { font-size: 0.85rem; color: #60687a; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+        .stat-item h3 { font-size: 2.2rem; color: #fff; display: flex; align-items: center; justify-content: center; gap: 12px; font-weight: 800; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+        .stat-item p { font-size: 0.9rem; color: #707788; text-transform: uppercase; letter-spacing: 2px; margin-top: 8px; font-weight: 600; }
         
-        .pulse { width: 10px; height: 10px; background: #2ecc71; border-radius: 50%; box-shadow: 0 0 10px #2ecc71; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .pulse { width: 12px; height: 12px; background: #2ecc71; border-radius: 50%; box-shadow: 0 0 15px #2ecc71, 0 0 30px #2ecc71; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
 
         /* GENEL BAŞLIKLAR */
-        .section-title { text-align: center; padding: 100px 20px 50px; }
-        .section-title h2 { font-family: 'Cinzel', serif; font-size: 2.2rem; margin-bottom: 10px; }
-        .section-title p { color: #60687a; font-size: 1rem; }
+        .section-title { text-align: center; padding: 120px 20px 60px; position: relative; z-index: 1; }
+        .section-title h2 { font-family: 'Cinzel', serif; font-size: 2.8rem; margin-bottom: 15px; text-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .section-title p { color: #707788; font-size: 1.1rem; letter-spacing: 1px; }
 
-        /* 🌟 YENİ NESİL REIATSU KARTLARI 🌟 */
-        .races-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        /* 🌟 ULTRA PREMIUM KART TASARIMI 🌟 */
+        .races-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; max-width: 1300px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
         
         .race-card {
-            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px;
-            width: 340px; height: 420px; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 35px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: default;
-            backdrop-filter: blur(10px);
+            background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px;
+            width: 360px; height: 480px; position: relative; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: flex-end; padding: 40px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1); cursor: crosshair;
+            backdrop-filter: blur(15px); box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
-        /* Ruh Enerjisi Efekti (Aura) */
-        .reiatsu-aura {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 150px; height: 150px; border-radius: 50%; filter: blur(70px);
-            opacity: 0.15; transition: all 0.6s ease; z-index: 0; pointer-events: none;
+        /* İçeriye Doğru Parlayan Kenarlık (Glow Effect) */
+        .race-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 24px; border: 2px solid transparent; transition: 0.5s; pointer-events: none;
         }
+        .shinigami:hover::before { border-color: var(--shinigami); box-shadow: inset 0 0 30px rgba(255, 159, 67, 0.2); }
+        .hollow:hover::before { border-color: var(--hollow); box-shadow: inset 0 0 30px rgba(255, 71, 87, 0.2); }
+        .quincy:hover::before { border-color: var(--quincy); box-shadow: inset 0 0 30px rgba(0, 229, 255, 0.2); }
 
-        .shinigami .reiatsu-aura { background: var(--shinigami-color); }
-        .hollow .reiatsu-aura { background: var(--hollow-color); }
-        .quincy .reiatsu-aura { background: var(--quincy-color); }
+        .race-card:hover { transform: translateY(-20px) scale(1.02); }
 
-        .race-card:hover { transform: translateY(-15px); border-color: rgba(255,255,255,0.2); }
-        
-        .race-card:hover .reiatsu-aura {
-            width: 300px; height: 300px; opacity: 0.6;
-            animation: aura-pulse 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes aura-pulse {
-            0% { transform: translate(-50%, -50%) scale(1); }
-            100% { transform: translate(-50%, -50%) scale(1.1); }
-        }
+        .race-icon { font-size: 3.5rem; margin-bottom: 20px; transition: 0.5s; filter: drop-shadow(0 0 15px rgba(255,255,255,0.2)); }
+        .race-card:hover .race-icon { transform: translateY(-10px) scale(1.1); }
 
         .race-content { position: relative; z-index: 1; transition: 0.4s; }
-        .race-card:hover .race-content { transform: translateY(-5px); }
         
-        .race-icon { font-size: 2.5rem; margin-bottom: 15px; opacity: 0.8; transition: 0.3s; }
-        .race-card:hover .race-icon { opacity: 1; transform: scale(1.1); }
-
-        .race-content h3 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 12px; letter-spacing: 1px; }
-        .shinigami h3 { color: var(--shinigami-color); }
-        .hollow h3 { color: var(--hollow-color); }
-        .quincy h3 { color: var(--quincy-color); }
+        .race-content h3 { font-family: 'Cinzel', serif; font-size: 2.2rem; margin-bottom: 15px; letter-spacing: 2px; }
+        .shinigami h3 { color: var(--shinigami); text-shadow: 0 0 20px rgba(255, 159, 67, 0.5); }
+        .hollow h3 { color: var(--hollow); text-shadow: 0 0 20px rgba(255, 71, 87, 0.5); }
+        .quincy h3 { color: var(--quincy); text-shadow: 0 0 20px rgba(0, 229, 255, 0.5); }
         
-        .race-content p { color: #9a9fac; font-size: 0.9rem; line-height: 1.6; }
+        .race-content p { color: #a0a5b5; font-size: 0.95rem; line-height: 1.7; transition: 0.3s; }
+        .race-card:hover .race-content p { color: #fff; }
 
-        /* LİDERLİK TABLOSU */
-        .leaderboard-container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
-        .leaderboard-table { width: 100%; border-collapse: collapse; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
-        .leaderboard-table th, .leaderboard-table td { padding: 18px 25px; text-align: left; }
-        .leaderboard-table th { background: rgba(0, 0, 0, 0.4); color: #00e5ff; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; }
-        .leaderboard-table tr { border-bottom: 1px solid var(--border-color); transition: 0.2s; }
-        .leaderboard-table tr:hover { background: rgba(255, 255, 255, 0.02); }
-        .rank { font-weight: bold; font-size: 1.1rem; }
-        .rank-1 { color: #f1c40f; }
-        .rank-2 { color: #bdc3c7; }
-        .rank-3 { color: #e67e22; }
+        /* LİDERLİK TABLOSU (PRO) */
+        .leaderboard-container { max-width: 1000px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+        .leaderboard-table { 
+            width: 100%; border-collapse: separate; border-spacing: 0 10px; 
+        }
+        .leaderboard-table th { 
+            padding: 15px 30px; text-align: left; color: var(--primary-glow); 
+            font-weight: 600; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;
+        }
+        .leaderboard-table td { 
+            padding: 20px 30px; background: var(--glass-bg); 
+            border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px); transition: 0.3s;
+        }
+        /* Kenar Ovallikleri */
+        .leaderboard-table td:first-child { border-left: 1px solid var(--glass-border); border-top-left-radius: 12px; border-bottom-left-radius: 12px; }
+        .leaderboard-table td:last-child { border-right: 1px solid var(--glass-border); border-top-right-radius: 12px; border-bottom-right-radius: 12px; }
+        
+        .leaderboard-table tr:hover td { background: rgba(255,255,255,0.05); transform: scale(1.01); border-color: rgba(0, 229, 255, 0.3); }
+        
+        .rank { font-weight: 800; font-size: 1.2rem; }
+        .rank-1 { color: #f1c40f; text-shadow: 0 0 15px rgba(241, 196, 15, 0.6); font-size: 1.4rem; }
+        .rank-2 { color: #bdc3c7; text-shadow: 0 0 15px rgba(189, 195, 199, 0.6); }
+        .rank-3 { color: #e67e22; text-shadow: 0 0 15px rgba(230, 126, 34, 0.6); }
 
         /* FOOTER */
-        footer { text-align: center; padding: 40px; background: #030405; color: #404552; border-top: 1px solid var(--border-color); font-size: 0.85rem; margin-top: 100px; }
+        footer { text-align: center; padding: 50px; background: rgba(0,0,0,0.8); color: #505565; font-size: 0.9rem; margin-top: 120px; border-top: 1px solid var(--glass-border); position: relative; z-index: 1; }
     </style>
 </head>
 <body>
@@ -154,30 +208,32 @@
     <nav>
         <a href="index.html" class="logo">BLEACH<span>:TR</span></a>
         <ul class="nav-links">
-            <li><a href="#irklar">Irklar</a></li>
+            <li><a href="#irklar">Sınıflar</a></li>
             <li><a href="#liderlik">Sıralama</a></li>
-            <li><a href="komutlar.html">Komutlar</a></li>
+            <li><a href="komutlar.html">Rehber & Komutlar</a></li>
         </ul>
         <a href="https://discord.gg/SENIN_LINKIN" target="_blank" class="btn-discord">Discord'a Katıl</a>
     </nav>
 
     <section class="hero">
-        <div class="badge" data-aos="fade-down" data-aos-duration="1000">DISCORD MMORPG</div>
-        <h1 data-aos="zoom-in" data-aos-duration="1200">Ruh Enerjini <br><span>Serbest Bırak.</span></h1>
-        <p data-aos="fade-up" data-aos-duration="1400" data-aos-delay="200">Gotei 13 bölüklerine katıl, Hueco Mundo'da sınırları zorla ya da Quincy ordusuyla gölgeleri yönet. Seçim senin.</p>
-        
-        <div class="stats-bar" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
-            <div class="stat-item">
-                <h3><div class="pulse"></div> 142</h3>
-                <p>Çevrimiçi</p>
-            </div>
-            <div class="stat-item">
-                <h3>🏰 100</h3>
-                <p>Muken Katı</p>
-            </div>
-            <div class="stat-item">
-                <h3>⚔️ 2.4K</h3>
-                <p>Savaş</p>
+        <div class="hero-content">
+            <div class="badge" data-aos="fade-down" data-aos-duration="1000">KUSURSUZ RPG DENEYİMİ</div>
+            <h1 data-aos="zoom-in" data-aos-duration="1200">Kaderini <br><span>Kendi Ellerine Al.</span></h1>
+            <p data-aos="fade-up" data-aos-duration="1400" data-aos-delay="200">Üç büyük ırk, yüzlerce yetenek ve sonsuz bir Muken Zindanı. Ruh enerjini hisset ve savaş alanına hükmetmeye hazırlan.</p>
+            
+            <div class="stats-bar" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400">
+                <div class="stat-item">
+                    <h3><div class="pulse"></div> 142</h3>
+                    <p>Çevrimiçi</p>
+                </div>
+                <div class="stat-item">
+                    <h3>🏰 100</h3>
+                    <p>Zindan Katı</p>
+                </div>
+                <div class="stat-item">
+                    <h3>⚔️ 2.4K</h3>
+                    <p>Kanlı Savaş</p>
+                </div>
             </div>
         </div>
     </section>
@@ -185,34 +241,31 @@
     <section id="irklar">
         <div class="section-title" data-aos="fade-up">
             <h2>Efsanevi Sınıflar</h2>
-            <p>Hangi gücü uyandıracaksın? (Kartlara dokun)</p>
+            <p>Hangi gücü uyandıracaksın? Kaderini seç.</p>
         </div>
 
         <div class="races-container">
             <div class="race-card shinigami" data-aos="fade-right" data-aos-delay="100">
-                <div class="reiatsu-aura"></div>
                 <div class="race-content">
-                    <div class="race-icon">⚔️</div>
+                    <div class="race-icon">🗡️</div>
                     <h3>Shinigami</h3>
-                    <p>Zanpakutō ile bağ kur. Shikai ve Bankai formlarını uyandırarak Ruh Cemiyeti'nin onurunu koru. Kido sanatlarında ustalaş.</p>
+                    <p>Zanpakutō ile bağ kur. Shikai ve Bankai formlarını uyandırarak Ruh Cemiyeti'nin onurunu koru. Kido sanatlarında ustalaş ve düşmanlarını arındır.</p>
                 </div>
             </div>
 
             <div class="race-card hollow" data-aos="fade-up" data-aos-delay="300">
-                <div class="reiatsu-aura"></div>
                 <div class="race-content">
-                    <div class="race-icon">👹</div>
+                    <div class="race-icon">💀</div>
                     <h3>Arrancar</h3>
-                    <p>Maskeni kırıp Vasto Lorde seviyesine evril. Resurrección formunu serbest bırakarak sınır tanımayan Cero patlamaları yarat.</p>
+                    <p>Maskeni kırıp Vasto Lorde seviyesine evril. Resurrección formunu serbest bırakarak sınır tanımayan Cero patlamaları ile Hueco Mundo'yu titret.</p>
                 </div>
             </div>
 
             <div class="race-card quincy" data-aos="fade-left" data-aos-delay="500">
-                <div class="reiatsu-aura"></div>
                 <div class="race-content">
                     <div class="race-icon">🏹</div>
                     <h3>Quincy</h3>
-                    <p>Yhwach'tan Kutsal Schrift harfini kazan. Reishi okları ve Vollständig uyanışıyla gölgelerin içinden düşmanlarını avla.</p>
+                    <p>Yhwach'tan Kutsal Schrift harfini kazan. Reishi okları ve Vollständig uyanışıyla gölgelerin içinden düşmanlarını avla ve dengeyi sağla.</p>
                 </div>
             </div>
         </div>
@@ -221,7 +274,7 @@
     <section id="liderlik">
         <div class="section-title" data-aos="fade-up">
             <h2>🏆 Liderlik Tablosu</h2>
-            <p>Muken Zindanı'nın Zirvesindekiler</p>
+            <p>Sınırları zorlayan, Muken'in en güçlü savaşçıları.</p>
         </div>
 
         <div class="leaderboard-container" data-aos="zoom-in" data-aos-delay="200">
@@ -238,31 +291,31 @@
                 <tbody>
                     <tr>
                         <td class="rank rank-1">🥇 1</td>
-                        <td><strong>Odekai</strong></td>
-                        <td style="color: var(--shinigami-color);">Shinigami</td>
-                        <td>Lv. 45</td>
-                        <td>Kat 32</td>
+                        <td style="font-size: 1.1rem; font-weight: bold; color: #fff;">Odekai</td>
+                        <td style="color: var(--shinigami); font-weight: 600;">Shinigami</td>
+                        <td style="color: #a0a5b5;">Lv. 45</td>
+                        <td style="color: #00e5ff; font-weight: bold;">Kat 32</td>
                     </tr>
                     <tr>
                         <td class="rank rank-2">🥈 2</td>
-                        <td><strong>Arda</strong></td>
-                        <td style="color: var(--hollow-color);">Hollow</td>
-                        <td>Lv. 41</td>
-                        <td>Kat 28</td>
+                        <td style="font-size: 1.1rem; font-weight: bold; color: #fff;">Arda</td>
+                        <td style="color: var(--hollow); font-weight: 600;">Hollow</td>
+                        <td style="color: #a0a5b5;">Lv. 41</td>
+                        <td style="color: #00e5ff; font-weight: bold;">Kat 28</td>
                     </tr>
                     <tr>
                         <td class="rank rank-3">🥉 3</td>
-                        <td><strong>Keishu</strong></td>
-                        <td style="color: var(--quincy-color);">Quincy</td>
-                        <td>Lv. 38</td>
-                        <td>Kat 25</td>
+                        <td style="font-size: 1.1rem; font-weight: bold; color: #fff;">Keishu</td>
+                        <td style="color: var(--quincy); font-weight: 600;">Quincy</td>
+                        <td style="color: #a0a5b5;">Lv. 38</td>
+                        <td style="color: #00e5ff; font-weight: bold;">Kat 25</td>
                     </tr>
                     <tr>
                         <td class="rank">4</td>
-                        <td>Renji_Fan</td>
-                        <td style="color: var(--shinigami-color);">Shinigami</td>
-                        <td>Lv. 30</td>
-                        <td>Kat 20</td>
+                        <td style="font-size: 1.1rem; font-weight: bold; color: #fff;">Renji_Fan</td>
+                        <td style="color: var(--shinigami); font-weight: 600;">Shinigami</td>
+                        <td style="color: #a0a5b5;">Lv. 30</td>
+                        <td style="color: #00e5ff; font-weight: bold;">Kat 20</td>
                     </tr>
                 </tbody>
             </table>
@@ -275,7 +328,7 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ once: true, offset: 100 });
+        AOS.init({ once: true, offset: 50 });
     </script>
 </body>
 </html>
